@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "api-dev": "pnpm -F @server/api dev"
   },
   "keywords": [],
   "author": "Dowon Wang",

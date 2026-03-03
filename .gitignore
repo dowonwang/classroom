@@ -1,5 +1,26 @@
 # 의존성 디렉토리
-node_modules/
+**/node_modules
+**/dist
+**/build
+**/coverage
+
+# 프레임워크
+**/.next
+**/.svelte-kit
+**/.turbo
+**/.vite
+
+# Logs
+.log
+
+# env
+.env
+.env.*
+!.env.example
 
 # OS
 .DS_*
+Thumbs.db
+
+# Keys
+*.pem
