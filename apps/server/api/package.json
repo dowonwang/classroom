@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "dotenv": "^17.3.1",
-    "elysia": "latest"
+    "elysia": "catalog:"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "catalog:"
   },
   "module": "src/index.js"
 }
