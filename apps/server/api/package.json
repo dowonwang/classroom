@@ -1,0 +1,21 @@
+{
+  "name": "@server/api",
+  "private": true,
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "pnpm run db:up && pnpm -F @packages/api-db run db:generate && bun run --watch src/index.ts",
+    "db:up": "docker compose -f ../../../packages/api-db/docker-compose.yml up -d",
+    "db:down": "docker compose -f ../../../packages/api-db/docker-compose.yml down",
+    "db:logs": "docker compose -f ../../../packages/api-db/docker-compose.yml logs -f"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "elysia": "catalog:",
+    "@packages/api-db": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "catalog:"
+  },
+  "module": "src/index.js"
+}
