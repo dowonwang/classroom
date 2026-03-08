@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:18.3-trixie
+    container_name: classroom-api
+    restart: unless-stopped
+
+    env_file:
+      - ./.env
+
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
