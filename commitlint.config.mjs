@@ -19,7 +19,7 @@ export default {
         "wip",
       ],
     ],
-    "scope-enum": [2, "always", ["server/api"]],
+    "scope-enum": [2, "always", ["server/api", "packages/api-db"]],
   },
   prompt: {
     settings: {},
