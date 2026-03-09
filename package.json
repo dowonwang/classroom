@@ -6,6 +6,8 @@
   "scripts": {
     "prepare": "husky",
     "commit": "git-cz",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "server/api:dev": "pnpm -F @server/api dev"
   },
   "keywords": [],
@@ -21,7 +23,10 @@
     "@commitlint/cli": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
     "@commitlint/cz-commitlint": "^20.4.1",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "commitizen": "^4.3.1",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "prettier": "^3.8.1"
   }
 }
