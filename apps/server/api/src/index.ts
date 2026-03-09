@@ -1,8 +1,8 @@
-import { Elysia } from "elysia";
-import "dotenv/config";
+import 'dotenv/config';
+import { Elysia } from 'elysia';
 
 const app = new Elysia()
-  .get("/", () => "Hello Elysia")
+  .get('/', () => 'Hello Elysia')
   .listen(process.env.APP_PORT || 3000);
 
 console.log(
