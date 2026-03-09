@@ -14,7 +14,25 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
+  /// 내부에서 사용되는 고유아이디
+  id   BigInt @id @default(autoincrement()) @map("_id")
+  /// 외부에 노출되는 고유아이디
+  uuid String @unique @default(uuid()) @db.Uuid
+
+  email    String
+  name     String
+  role     UserRole @default(STUDENT)
+  password String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user")
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
+
+  @@map("user_role")
 }
