@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18.3-trixie
+    image: postgres:18.3
     container_name: classroom-api
     restart: unless-stopped
 
