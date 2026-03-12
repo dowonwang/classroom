@@ -105,7 +105,7 @@ export default {
         description:
           '이 변경 사항이 영향을 미치는 범위는 어디인가요? (예: 컴포넌트명 또는 파일명)',
         enum: {
-          api: { description: 'apps/server/api' },
+          'server/api': { description: 'apps/server/api' },
         },
       },
       subject: {
