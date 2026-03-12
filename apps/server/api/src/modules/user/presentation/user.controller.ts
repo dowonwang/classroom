@@ -1,0 +1,26 @@
+import { CreateUserHandler } from '../application/commands/create-user/create-user.handler';
+import { FindUserByUuidHandler } from '../application/queries/find-user-by-uuid.handler';
+import { UserHttpModel } from './user.http-model';
+import Elysia from 'elysia';
+
+type Dependencies = {
+  createUserHandler: CreateUserHandler;
+  getUserByUuidHandler: FindUserByUuidHandler;
+};
+
+export const createUserController = (deps: Dependencies) =>
+  new Elysia({ prefix: '/users' }).model(UserHttpModel).post(
+    '/',
+    async ({ body, set }) => {
+      const result = await deps.createUserHandler.execute(body);
+      set.status = 201;
+      return result;
+    },
+    {
+      body: 'createUserBody',
+      detail: {
+        tags: ['User'],
+        summary: 'Create user',
+      },
+    },
+  );

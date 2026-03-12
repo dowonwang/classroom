@@ -19,7 +19,7 @@ model User {
   /// 외부에 노출되는 고유아이디
   uuid String @unique @default(uuid()) @db.Uuid
 
-  email    String
+  email    String   @unique
   name     String
   role     UserRole @default(STUDENT)
   password String

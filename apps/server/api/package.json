@@ -7,14 +7,18 @@
     "dev": "pnpm run db:up && pnpm -F @packages/api-db run db:generate && bun run --watch src/index.ts",
     "db:up": "docker compose -f ../../../packages/api-db/docker-compose.yml up -d",
     "db:down": "docker compose -f ../../../packages/api-db/docker-compose.yml down",
-    "db:logs": "docker compose -f ../../../packages/api-db/docker-compose.yml logs -f"
+    "db:logs": "docker compose -f ../../../packages/api-db/docker-compose.yml logs -f",
+    "db:push": "pnpm -C ../../../packages/api-db run db:push"
   },
   "dependencies": {
+    "@packages/api-db": "workspace:*",
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "elysia": "catalog:",
-    "@packages/api-db": "workspace:*"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "bun-types": "catalog:"
   },
   "module": "src/index.js"
