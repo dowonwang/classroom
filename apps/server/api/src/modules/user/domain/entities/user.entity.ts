@@ -39,26 +39,26 @@ export class User {
   }
 
   get id(): UserProps['id'] {
-    return this.id;
+    return this.props.id;
   }
 
   get uuid(): UserProps['uuid'] {
-    return this.uuid;
+    return this.props.uuid;
   }
 
   get email(): Email {
-    return this.email;
+    return this.props.email;
   }
 
   get name(): UserName {
-    return this.name;
+    return this.props.name;
   }
 
   get role(): UserProps['role'] {
-    return this.role;
+    return this.props.role;
   }
 
   get password(): Password {
-    return this.password;
+    return this.props.password;
   }
 }
