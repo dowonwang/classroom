@@ -11,7 +11,6 @@ export type ApiSuccessResponse<T> = {
 };
 
 export type ApiErrorDetail = {
-  code: string;
   message: string;
   details?: unknown;
 };

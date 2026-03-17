@@ -1,13 +1,16 @@
+import { LOG_EVENT } from '../logger/constant/log-event';
+import { LOG_MESSAGE } from '../logger/constant/log-message';
 import { AppError } from './app.error';
 
 export class BadRequestError extends AppError {
   constructor(
-    message = 'Bad request',
-    userMessage = '잚못된 요청입니다.',
+    event = LOG_EVENT.HTTP_BAD_REQUEST,
+    message = LOG_MESSAGE.HTTP_BAD_REQUEST,
+    userMessage = '잘못된 요청입니다.',
     details?: unknown,
   ) {
     super({
-      code: 'BAD_REQUEST',
+      event,
       status: 400,
       message,
       userMessage,
@@ -18,12 +21,13 @@ export class BadRequestError extends AppError {
 
 export class UnauthorizedError extends AppError {
   constructor(
-    message = 'Unauthorized',
+    event = LOG_EVENT.HTTP_UNAUTHORIZED,
+    message = LOG_MESSAGE.HTTP_UNAUTHORIZED,
     userMessage = '인증이 필요합니다.',
     details?: unknown,
   ) {
     super({
-      code: 'UNAUTHORIZED',
+      event,
       status: 401,
       userMessage,
       message,
@@ -34,12 +38,13 @@ export class UnauthorizedError extends AppError {
 
 export class ForbiddenError extends AppError {
   constructor(
-    message = 'Forbidden',
+    event = LOG_EVENT.HTTP_FORBIDDEN,
+    message = LOG_MESSAGE.HTTP_FORBIDDEN,
     userMessage = '접근 권한이 없습니다.',
     details?: unknown,
   ) {
     super({
-      code: 'FORBIDDEN',
+      event,
       status: 403,
       userMessage,
       message,
@@ -50,12 +55,13 @@ export class ForbiddenError extends AppError {
 
 export class NotFoundError extends AppError {
   constructor(
-    message = 'Resource not found.',
+    event = LOG_EVENT.HTTP_NOT_FOUND,
+    message = LOG_MESSAGE.HTTP_NOT_FOUND,
     userMessage = '요청한 리소스를 찾을 수 없습니다.',
     details?: unknown,
   ) {
     super({
-      code: 'NOT_FOUND',
+      event,
       status: 404,
       userMessage,
       message,
@@ -66,12 +72,13 @@ export class NotFoundError extends AppError {
 
 export class ConflictError extends AppError {
   constructor(
-    message = 'Resource conflict.',
+    event = LOG_EVENT.HTTP_CONFLICT,
+    message = LOG_MESSAGE.HTTP_CONFLICT,
     userMessage = '이미 존재하는 데이터입니다.',
     details?: unknown,
   ) {
     super({
-      code: 'CONFLICT',
+      event,
       status: 409,
       userMessage,
       message,
@@ -82,13 +89,14 @@ export class ConflictError extends AppError {
 
 export class InternalServerError extends AppError {
   constructor(
-    message = 'Internal server error.',
+    event = LOG_EVENT.HTTP_INTERNAL_SERVER_ERROR,
+    message = LOG_MESSAGE.HTTP_INTERNAL_SERVER_ERROR,
     userMessage = '일시적인 오류가 발생했습니다.',
     details?: unknown,
     cause?: unknown,
   ) {
     super({
-      code: 'INTERNAL_SERVER_ERROR',
+      event,
       status: 500,
       userMessage,
       message,

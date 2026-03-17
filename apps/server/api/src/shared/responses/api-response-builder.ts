@@ -23,7 +23,6 @@ export const ApiResponseBuilder = {
   },
 
   error({
-    code,
     message,
     requestId,
     userMessage,
@@ -36,7 +35,6 @@ export const ApiResponseBuilder = {
       success: false,
       data: null,
       error: {
-        code,
         message,
         ...(userMessage !== undefined ? { userMessage } : {}),
         ...(details !== undefined ? { details } : {}),

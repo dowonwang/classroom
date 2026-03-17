@@ -1,10 +1,55 @@
-import pino from 'pino';
+import pino, { Logger } from 'pino';
 
-export const logger = pino({
-  transport: {
-    target: 'pino-pretty',
-    options: {
-      colorize: true,
-    },
-  },
+const rootLogger = pino({
+  level: process.env.NODE_ENV !== 'production' ? 'trace' : 'info',
+  transport:
+    process.env.NODE_ENV !== 'production'
+      ? {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            ignore: 'hostname',
+            messageFormat: `[{scope}] {msg}`,
+          },
+        }
+      : undefined,
+}).child({ scope: 'APP', event: '' });
+
+type BaseLogContext = {
+  event?: string;
+  scope?: string;
+  requestId?: string;
+  method?: string;
+  path?: string;
+  searchParams?: Record<string, string>;
+  status?: number;
+  userId?: string;
+  details?: unknown;
+  err?: unknown;
+};
+
+type ScopedLogger = {
+  fatal: (context: BaseLogContext, message: string) => void;
+  error: (context: BaseLogContext, message: string) => void;
+  warn: (context: BaseLogContext, message: string) => void;
+  info: (context: BaseLogContext, message: string) => void;
+  debug: (context: BaseLogContext, message: string) => void;
+  trace: (context: BaseLogContext, message: string) => void;
+  silent: (context: BaseLogContext, message: string) => void;
+};
+
+const createScopedLogger = (logger: Logger): ScopedLogger => ({
+  fatal: (context, message) => logger.info(context, message),
+  error: (context, message) => logger.info(context, message),
+  warn: (context, message) => logger.info(context, message),
+  info: (context, message) => logger.info(context, message),
+  debug: (context, message) => logger.info(context, message),
+  trace: (context, message) => logger.info(context, message),
+  silent: (context, message) => logger.info(context, message),
 });
+
+export const logger = createScopedLogger(rootLogger);
+
+export const createLogger = (scope: string): ScopedLogger => {
+  return createScopedLogger(rootLogger.child({ scope }));
+};
