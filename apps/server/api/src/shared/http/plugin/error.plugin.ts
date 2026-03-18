@@ -1,10 +1,11 @@
-import { AppError } from '../errors/app.error';
-import { LOG_EVENT } from '../logger/constant/log-event';
-import { LOG_MESSAGE } from '../logger/constant/log-message';
-import { logger } from '../logger/logger';
-import { ApiResponseBuilder } from '../responses/api-response-builder';
+import { AppError } from '../../errors/app.error';
+import { LOG_EVENT } from '../../logger/constant/log-event';
+import { LOG_MESSAGE } from '../../logger/constant/log-message';
+import { logger } from '../../logger/logger';
+import { ApiResponseBuilder } from '../../responses/api-response-builder';
+import { VaildationErrorMapper } from '../mapper/vaildation-error.mapper';
 import { randomUUIDv7 } from 'bun';
-import Elysia from 'elysia';
+import Elysia, { ValidationError } from 'elysia';
 
 export const errorPlugin = new Elysia().onError(
   { as: 'scoped' },
@@ -13,7 +14,7 @@ export const errorPlugin = new Elysia().onError(
     const searchParams = Object.fromEntries(new URL(request.url).searchParams);
 
     if (error instanceof AppError) {
-      logger.warn(
+      logger.error(
         {
           event: error.event,
           requestId: uuid,
@@ -22,6 +23,7 @@ export const errorPlugin = new Elysia().onError(
           searchParams,
           status: error.status,
           details: error.details,
+          scope: error.scope || 'APP',
         },
         error.message,
       );
@@ -34,9 +36,33 @@ export const errorPlugin = new Elysia().onError(
       });
     }
 
+    if (error instanceof ValidationError) {
+      const appError = VaildationErrorMapper(error);
+
+      logger.error(
+        {
+          event: appError.event,
+          requestId: uuid,
+          method: request.method,
+          path,
+          searchParams,
+          status: appError.status,
+          details: appError.details,
+          scope: appError.scope || 'APP',
+        },
+        appError.message,
+      );
+
+      return ApiResponseBuilder.error({
+        message: appError.userMessage,
+        requestId: uuid,
+        details: appError.details,
+      });
+    }
+
     set.status = 500;
 
-    logger.warn(
+    logger.error(
       {
         event: LOG_EVENT.APP_ERROR_OCCURRED,
         requestId: uuid,
@@ -44,6 +70,7 @@ export const errorPlugin = new Elysia().onError(
         path,
         searchParams,
         status: set.status,
+        err: error,
       },
       (error as any)?.message || LOG_MESSAGE.APP_ERROR_OCCURRED,
     );

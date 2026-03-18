@@ -8,6 +8,7 @@ export const LOG_EVENT = {
   HTTP_FORBIDDEN: 'http.forbidden',
   HTTP_NOT_FOUND: 'http.not_found',
   HTTP_CONFLICT: 'http.conflict',
+  HTTP_UNPROCESSABLE_CONTENT: 'http.unprocessable_content',
   HTTP_INTERNAL_SERVER_ERROR: 'http.internal_server_error',
 
   APP_START: 'app.start',

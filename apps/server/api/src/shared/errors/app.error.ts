@@ -5,6 +5,7 @@ export type AppErrorOptions = {
   userMessage: string;
   details?: unknown;
   cause?: unknown;
+  scope?: string;
 };
 
 export class AppError extends Error {
@@ -12,6 +13,7 @@ export class AppError extends Error {
   public readonly userMessage: string;
   public readonly details?: unknown;
   public readonly event?: string;
+  public readonly scope?: string;
   public override readonly cause?: unknown;
 
   constructor(options: AppErrorOptions) {
@@ -22,6 +24,7 @@ export class AppError extends Error {
     this.userMessage = options.userMessage;
     this.details = options.details;
     this.event = options.event;
+    this.scope = options.scope;
     this.cause = options.cause;
 
     Object.setPrototypeOf(this, new.target.prototype);

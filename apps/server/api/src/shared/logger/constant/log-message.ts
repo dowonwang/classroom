@@ -10,6 +10,7 @@ export const LOG_MESSAGE: LogEventMessage = {
   HTTP_FORBIDDEN: 'Forbidden',
   HTTP_NOT_FOUND: 'Resource not found',
   HTTP_CONFLICT: 'Resource conflict',
+  HTTP_UNPROCESSABLE_CONTENT: 'Unprocessable Content',
   HTTP_INTERNAL_SERVER_ERROR: 'Internal server error',
 
   APP_START: 'REST API server is running at',

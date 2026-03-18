@@ -1,4 +1,4 @@
-import { errorPlugin } from '../../../shared/http/error.plugin';
+import { errorPlugin } from '../../../shared/http/plugin/error.plugin';
 import { CreateUserHandler } from '../application/commands/create-user/create-user.handler';
 import { FindUserByUuidHandler } from '../application/queries/find-user-by-uuid.handler';
 import { UserHttpModel } from './user.http-model';

@@ -4,9 +4,10 @@ import { AppError } from './app.error';
 
 export class BadRequestError extends AppError {
   constructor(
-    event = LOG_EVENT.HTTP_BAD_REQUEST,
-    message = LOG_MESSAGE.HTTP_BAD_REQUEST,
-    userMessage = '잘못된 요청입니다.',
+    event: string = LOG_EVENT.HTTP_BAD_REQUEST,
+    message: string = LOG_MESSAGE.HTTP_BAD_REQUEST,
+    userMessage: string = '잘못된 요청입니다.',
+    scope?: string,
     details?: unknown,
   ) {
     super({
@@ -15,15 +16,17 @@ export class BadRequestError extends AppError {
       message,
       userMessage,
       details,
+      scope,
     });
   }
 }
 
 export class UnauthorizedError extends AppError {
   constructor(
-    event = LOG_EVENT.HTTP_UNAUTHORIZED,
-    message = LOG_MESSAGE.HTTP_UNAUTHORIZED,
-    userMessage = '인증이 필요합니다.',
+    event: string = LOG_EVENT.HTTP_UNAUTHORIZED,
+    message: string = LOG_MESSAGE.HTTP_UNAUTHORIZED,
+    userMessage: string = '인증이 필요합니다.',
+    scope?: string,
     details?: unknown,
   ) {
     super({
@@ -32,15 +35,17 @@ export class UnauthorizedError extends AppError {
       userMessage,
       message,
       details,
+      scope,
     });
   }
 }
 
 export class ForbiddenError extends AppError {
   constructor(
-    event = LOG_EVENT.HTTP_FORBIDDEN,
-    message = LOG_MESSAGE.HTTP_FORBIDDEN,
-    userMessage = '접근 권한이 없습니다.',
+    event: string = LOG_EVENT.HTTP_FORBIDDEN,
+    message: string = LOG_MESSAGE.HTTP_FORBIDDEN,
+    userMessage: string = '접근 권한이 없습니다.',
+    scope?: string,
     details?: unknown,
   ) {
     super({
@@ -49,15 +54,17 @@ export class ForbiddenError extends AppError {
       userMessage,
       message,
       details,
+      scope,
     });
   }
 }
 
 export class NotFoundError extends AppError {
   constructor(
-    event = LOG_EVENT.HTTP_NOT_FOUND,
-    message = LOG_MESSAGE.HTTP_NOT_FOUND,
-    userMessage = '요청한 리소스를 찾을 수 없습니다.',
+    event: string = LOG_EVENT.HTTP_NOT_FOUND,
+    message: string = LOG_MESSAGE.HTTP_NOT_FOUND,
+    userMessage: string = '요청한 리소스를 찾을 수 없습니다.',
+    scope?: string,
     details?: unknown,
   ) {
     super({
@@ -66,15 +73,17 @@ export class NotFoundError extends AppError {
       userMessage,
       message,
       details,
+      scope,
     });
   }
 }
 
 export class ConflictError extends AppError {
   constructor(
-    event = LOG_EVENT.HTTP_CONFLICT,
-    message = LOG_MESSAGE.HTTP_CONFLICT,
-    userMessage = '이미 존재하는 데이터입니다.',
+    event: string = LOG_EVENT.HTTP_CONFLICT,
+    message: string = LOG_MESSAGE.HTTP_CONFLICT,
+    userMessage: string = '이미 존재하는 데이터입니다.',
+    scope?: string,
     details?: unknown,
   ) {
     super({
@@ -83,15 +92,36 @@ export class ConflictError extends AppError {
       userMessage,
       message,
       details,
+      scope,
+    });
+  }
+}
+
+export class UnprocessableContent extends AppError {
+  constructor(
+    event: string = LOG_EVENT.HTTP_UNPROCESSABLE_CONTENT,
+    message: string = LOG_MESSAGE.HTTP_UNPROCESSABLE_CONTENT,
+    userMessage: string = '유효성 검사 실패',
+    scope?: string,
+    details?: unknown,
+  ) {
+    super({
+      event,
+      status: 422,
+      userMessage,
+      message,
+      details,
+      scope,
     });
   }
 }
 
 export class InternalServerError extends AppError {
   constructor(
-    event = LOG_EVENT.HTTP_INTERNAL_SERVER_ERROR,
-    message = LOG_MESSAGE.HTTP_INTERNAL_SERVER_ERROR,
-    userMessage = '일시적인 오류가 발생했습니다.',
+    event: string = LOG_EVENT.HTTP_INTERNAL_SERVER_ERROR,
+    message: string = LOG_MESSAGE.HTTP_INTERNAL_SERVER_ERROR,
+    userMessage: string = '일시적인 오류가 발생했습니다.',
+    scope?: string,
     details?: unknown,
     cause?: unknown,
   ) {
@@ -102,6 +132,7 @@ export class InternalServerError extends AppError {
       message,
       details,
       cause,
+      scope,
     });
   }
 }

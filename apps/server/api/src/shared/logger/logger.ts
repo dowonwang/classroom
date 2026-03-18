@@ -13,7 +13,7 @@ const rootLogger = pino({
           },
         }
       : undefined,
-}).child({ scope: 'APP', event: '' });
+}).child({ scope: 'APP' });
 
 type BaseLogContext = {
   event?: string;
@@ -39,13 +39,13 @@ type ScopedLogger = {
 };
 
 const createScopedLogger = (logger: Logger): ScopedLogger => ({
-  fatal: (context, message) => logger.info(context, message),
-  error: (context, message) => logger.info(context, message),
-  warn: (context, message) => logger.info(context, message),
+  fatal: (context, message) => logger.fatal(context, message),
+  error: (context, message) => logger.error(context, message),
+  warn: (context, message) => logger.warn(context, message),
   info: (context, message) => logger.info(context, message),
-  debug: (context, message) => logger.info(context, message),
-  trace: (context, message) => logger.info(context, message),
-  silent: (context, message) => logger.info(context, message),
+  debug: (context, message) => logger.debug(context, message),
+  trace: (context, message) => logger.trace(context, message),
+  silent: (context, message) => logger.silent(context, message),
 });
 
 export const logger = createScopedLogger(rootLogger);
