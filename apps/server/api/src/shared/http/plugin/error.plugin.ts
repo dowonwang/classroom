@@ -15,40 +15,11 @@ export const errorPlugin = new Elysia().onError(
     const uuid = randomUUIDv7();
     const searchParams = Object.fromEntries(new URL(request.url).searchParams);
 
-    if (error instanceof AppError) {
-      logger.error(
-        {
-          event: error.event,
-          requestId: uuid,
-          method: request.method,
-          path,
-          searchParams,
-          status: error.status,
-          details: error.details,
-          scope: error.scope || 'APP',
-        },
-        error.message,
-      );
-
-      set.status = error.status;
-
-      if (error instanceof UnprocessableContent) {
-        return ApiResponseBuilder.error({
-          message: error.userMessage,
-          details: error.details,
-          requestId: uuid,
-        });
-      }
-
-      return ApiResponseBuilder.error({
-        message: error.userMessage,
-        requestId: uuid,
-      });
-    }
-
     if (error instanceof ValidationError) {
       const appError = VaildationErrorMapper(error);
       const scope = getRouteLogScope(path);
+
+      set.status = appError.status;
 
       logger.error(
         {
@@ -68,6 +39,37 @@ export const errorPlugin = new Elysia().onError(
         message: appError.userMessage,
         requestId: uuid,
         details: appError.details,
+      });
+    }
+
+    if (error instanceof AppError) {
+      set.status = error.status;
+
+      if (error instanceof UnprocessableContent) {
+        return ApiResponseBuilder.error({
+          message: error.userMessage,
+          details: error.details,
+          requestId: uuid,
+        });
+      }
+
+      logger.error(
+        {
+          event: error.event,
+          requestId: uuid,
+          method: request.method,
+          path,
+          searchParams,
+          status: error.status,
+          details: error.details,
+          scope: error.scope || 'APP',
+        },
+        error.message,
+      );
+
+      return ApiResponseBuilder.error({
+        message: error.userMessage,
+        requestId: uuid,
       });
     }
 

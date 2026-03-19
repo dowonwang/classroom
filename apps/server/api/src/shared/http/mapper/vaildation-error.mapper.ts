@@ -8,16 +8,12 @@ export function VaildationErrorMapper(error: ValidationError): BadRequestError {
     const errors = detail.errors;
 
     if (errors && Array.isArray(errors)) {
-      return new BadRequestError(
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        errors.map(({ path, message }) => ({
+      return new BadRequestError({
+        detail: errors.map(({ path, message }) => ({
           path,
           message,
         })),
-      );
+      });
     }
   }
 

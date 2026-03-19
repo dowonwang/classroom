@@ -2,7 +2,7 @@ import { ZodErrorMapper } from '../../../../shared/http/mapper/zod-error.mapper'
 import z from 'zod';
 
 const nameSchema = z.object({
-  name: z.string().min(10).max(20),
+  name: z.string().min(1).max(20),
 });
 
 export class UserName {

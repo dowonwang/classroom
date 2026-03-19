@@ -5,12 +5,12 @@ import { USER_LOG_MESSAGE } from './constant/user-log-message';
 
 export class EmailAlreadyExists extends ConflictError {
   constructor(scope: string, userId: User['id']) {
-    super(
-      USER_LOG_EVENT.USER_EMAIL_ALREADY_EXIST,
-      USER_LOG_MESSAGE.USER_EMAIL_ALREADY_EXIST,
-      undefined,
+    super({
+      event: USER_LOG_EVENT.USER_EMAIL_ALREADY_EXIST,
+      message: USER_LOG_MESSAGE.USER_EMAIL_ALREADY_EXIST,
+      userMessage: undefined,
       scope,
-      { userId },
-    );
+      detail: { userId },
+    });
   }
 }

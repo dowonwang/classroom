@@ -5,11 +5,8 @@ export function ZodErrorMapper(
   error: ZodError,
   scope: string,
 ): UnprocessableContent {
-  return new UnprocessableContent(
-    undefined,
-    undefined,
-    undefined,
+  return new UnprocessableContent({
     scope,
-    error.issues.map(({ path, message }) => ({ path, message })),
-  );
+    detail: error.issues.map(({ path, message }) => ({ path, message })),
+  });
 }

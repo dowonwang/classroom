@@ -11,6 +11,7 @@ export class UserPassword {
   static fromHashed(hashed: string) {
     const vaildation = passewordHashSchema.safeParse(hashed);
 
+    // TODO: 500으로 처리 변경해야함
     if (vaildation.error) {
       throw ZodErrorMapper(vaildation.error, UserPassword.name);
     }
