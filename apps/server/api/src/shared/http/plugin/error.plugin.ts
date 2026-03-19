@@ -3,6 +3,7 @@ import { LOG_EVENT } from '../../logger/constant/log-event';
 import { LOG_MESSAGE } from '../../logger/constant/log-message';
 import { logger } from '../../logger/logger';
 import { ApiResponseBuilder } from '../../responses/api-response-builder';
+import { getRouteLogScope } from '../constants/route-log-scope';
 import { VaildationErrorMapper } from '../mapper/vaildation-error.mapper';
 import { randomUUIDv7 } from 'bun';
 import Elysia, { ValidationError } from 'elysia';
@@ -38,6 +39,7 @@ export const errorPlugin = new Elysia().onError(
 
     if (error instanceof ValidationError) {
       const appError = VaildationErrorMapper(error);
+      const scope = getRouteLogScope(path);
 
       logger.error(
         {
@@ -48,7 +50,7 @@ export const errorPlugin = new Elysia().onError(
           searchParams,
           status: appError.status,
           details: appError.details,
-          scope: appError.scope || 'APP',
+          scope,
         },
         appError.message,
       );
