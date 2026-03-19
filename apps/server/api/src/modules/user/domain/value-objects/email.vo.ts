@@ -5,22 +5,22 @@ const emailSchema = z.object({
   email: z.email(),
 });
 
-export class Email {
+export class UserEmail {
   private constructor(private readonly value: string) {}
 
-  static create(input: string): Email {
+  static create(input: string): UserEmail {
     const vaildation = emailSchema.safeParse({
       email: input,
     });
 
     if (vaildation.error) {
-      throw ZodErrorMapper(vaildation.error, Email.name);
+      throw ZodErrorMapper(vaildation.error, UserEmail.name);
     }
 
-    return new Email(vaildation.data.email);
+    return new UserEmail(vaildation.data.email);
   }
 
-  equals(other: Email): boolean {
+  equals(other: UserEmail): boolean {
     return this.value === other.value;
   }
 

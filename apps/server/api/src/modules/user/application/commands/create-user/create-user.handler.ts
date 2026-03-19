@@ -2,9 +2,9 @@ import { User } from '../../../domain/entities/user.entity';
 import { EmailAlreadyExists } from '../../../domain/errors/email-already-exists.error';
 import { UserCommandRepository } from '../../../domain/repositories/user-command.repository';
 import { PasswordHasher } from '../../../domain/services/password-hasher';
-import { Email } from '../../../domain/value-objects/email.vo';
+import { UserEmail } from '../../../domain/value-objects/email.vo';
 import { UserName } from '../../../domain/value-objects/name.vo';
-import { Password } from '../../../domain/value-objects/password.vo';
+import { UserPassword } from '../../../domain/value-objects/password.vo';
 import { CreateUserCommand } from './create-user.command';
 import { randomUUIDv7 } from 'bun';
 
@@ -15,7 +15,7 @@ export class CreateUserHandler {
   ) {}
 
   async execute(command: CreateUserCommand): Promise<{ uuid: string }> {
-    const email = Email.create(command.email);
+    const email = UserEmail.create(command.email);
 
     const existing = await this.userCommandRepository.findByEmail(
       email.getValue(),
@@ -32,7 +32,7 @@ export class CreateUserHandler {
       uuid: randomUUIDv7(),
       email,
       name,
-      password: Password.fromHashed(hashedPassword),
+      password: UserPassword.fromHashed(hashedPassword),
       role: command.role,
     });
 

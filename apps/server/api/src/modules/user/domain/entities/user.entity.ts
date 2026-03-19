@@ -1,11 +1,11 @@
-import { Email } from '../value-objects/email.vo';
+import { UserEmail } from '../value-objects/email.vo';
 import { UserName } from '../value-objects/name.vo';
-import { Password } from '../value-objects/password.vo';
-import type { User as UserType, UserRole } from '@packages/api-db';
+import { UserPassword } from '../value-objects/password.vo';
+import type { UserRole, User as UserType } from '@packages/api-db';
 
 type UserTypeOverrides = {
-  password: Password;
-  email: Email;
+  password: UserPassword;
+  email: UserEmail;
   name: UserName;
   id?: UserType['id'];
   createdAt?: UserType['createdAt'];
@@ -34,7 +34,7 @@ export class User {
     this.props.role = role;
   }
 
-  changePassword(password: Password) {
+  changePassword(password: UserPassword) {
     this.props.password = password;
   }
 
@@ -46,7 +46,7 @@ export class User {
     return this.props.uuid;
   }
 
-  get email(): Email {
+  get email(): UserEmail {
     return this.props.email;
   }
 
@@ -58,7 +58,7 @@ export class User {
     return this.props.role;
   }
 
-  get password(): Password {
+  get password(): UserPassword {
     return this.props.password;
   }
 }

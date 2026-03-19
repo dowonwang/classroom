@@ -5,17 +5,17 @@ const passewordHashSchema = z
   .string()
   .regex(/^\$2[ayb]\$[0-9]{2}\$[./A-Za-z0-9]{53}$/);
 
-export class Password {
+export class UserPassword {
   private constructor(private readonly hashedPassword: string) {}
 
   static fromHashed(hashed: string) {
     const vaildation = passewordHashSchema.safeParse(hashed);
 
     if (vaildation.error) {
-      throw ZodErrorMapper(vaildation.error, Password.name);
+      throw ZodErrorMapper(vaildation.error, UserPassword.name);
     }
 
-    return new Password(vaildation.data);
+    return new UserPassword(vaildation.data);
   }
 
   getValue(): string {
