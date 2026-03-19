@@ -1,16 +1,21 @@
+import { ZodErrorMapper } from '../../../../shared/http/mapper/zod-error.mapper';
 import z from 'zod';
 
 const passewordHashSchema = z
   .string()
-  .trim()
   .regex(/^\$2[ayb]\$[0-9]{2}\$[./A-Za-z0-9]{53}$/);
 
 export class Password {
   private constructor(private readonly hashedPassword: string) {}
 
   static fromHashed(hashed: string) {
-    const normalized = passewordHashSchema.parse(hashed);
-    return new Password(normalized);
+    const vaildation = passewordHashSchema.safeParse(hashed);
+
+    if (vaildation.error) {
+      throw ZodErrorMapper(vaildation.error, Password.name);
+    }
+
+    return new Password(vaildation.data);
   }
 
   getValue(): string {
