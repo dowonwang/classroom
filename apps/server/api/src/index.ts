@@ -1,9 +1,13 @@
 import { userModule } from './modules/user';
+import { LOG_EVENT } from './shared/logger/constant/log-event';
+import { LOG_MESSAGE } from './shared/logger/constant/log-message';
+import { logger } from './shared/logger/logger';
 import 'dotenv/config';
 import { Elysia } from 'elysia';
 
 const app = new Elysia().use(userModule).listen(process.env.APP_PORT || 3000);
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
+logger.info(
+  { event: LOG_EVENT.APP_START },
+  `🦊 ${LOG_MESSAGE.APP_START} ${app.server?.hostname}:${app.server?.port}`,
 );

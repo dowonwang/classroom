@@ -1,4 +1,5 @@
 import { User } from '../../../domain/entities/user.entity';
+import { EmailAlreadyExists } from '../../../domain/errors/email-already-exists.error';
 import { UserCommandRepository } from '../../../domain/repositories/user-command.repository';
 import { PasswordHasher } from '../../../domain/services/password-hasher';
 import { Email } from '../../../domain/value-objects/email.vo';
@@ -21,7 +22,7 @@ export class CreateUserHandler {
     );
 
     if (existing) {
-      throw new Error('User with this email already exists');
+      throw new EmailAlreadyExists(CreateUserHandler.name, existing.id);
     }
 
     const hashedPassword = await this.passwordHaser.hash(command.password);

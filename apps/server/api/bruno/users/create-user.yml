@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: '{{process.env.BASE_URL}}/users'
+  url: "{{process.env.BASE_URL}}/users"
   headers:
     - name: Content-Type
       value: application/json
@@ -16,6 +16,7 @@ http:
         "email": "test@test.com",
         "name": "tester",
         "role": "STUDENT",
+        "password": "tester1234"
       }
   auth: inherit
 

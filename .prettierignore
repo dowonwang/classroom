@@ -13,6 +13,7 @@ out
 .husky
 .gitignore
 .prettierignore
+*.yml
 
 # env
 .env
