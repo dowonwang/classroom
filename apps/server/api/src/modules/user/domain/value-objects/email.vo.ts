@@ -1,19 +1,23 @@
 import { ZodErrorMapper } from '../../../../shared/http/mapper/zod-error.mapper';
 import z from 'zod';
 
-const emailSchema = z.email();
+const emailSchema = z.object({
+  email: z.email(),
+});
 
 export class Email {
   private constructor(private readonly value: string) {}
 
   static create(input: string): Email {
-    const vaildation = emailSchema.safeParse(input);
+    const vaildation = emailSchema.safeParse({
+      email: input,
+    });
 
     if (vaildation.error) {
       throw ZodErrorMapper(vaildation.error, Email.name);
     }
 
-    return new Email(vaildation.data);
+    return new Email(vaildation.data.email);
   }
 
   equals(other: Email): boolean {

@@ -1,4 +1,5 @@
 import { AppError } from '../../errors/app.error';
+import { UnprocessableContent } from '../../errors/common.erorr';
 import { LOG_EVENT } from '../../logger/constant/log-event';
 import { LOG_MESSAGE } from '../../logger/constant/log-message';
 import { logger } from '../../logger/logger';
@@ -30,6 +31,14 @@ export const errorPlugin = new Elysia().onError(
       );
 
       set.status = error.status;
+
+      if (error instanceof UnprocessableContent) {
+        return ApiResponseBuilder.error({
+          message: error.userMessage,
+          details: error.details,
+          requestId: uuid,
+        });
+      }
 
       return ApiResponseBuilder.error({
         message: error.userMessage,
