@@ -1,6 +1,8 @@
-import { User } from '@packages/api-db';
+import { UserRole } from '../../../domain/entities/user.entity';
 
-export type CreateUserCommand = Pick<
-  User,
-  'email' | 'name' | 'role' | 'password'
->;
+export type CreateUserCommand = {
+  email: string;
+  name: string;
+  password: string;
+  role: UserRole;
+};
