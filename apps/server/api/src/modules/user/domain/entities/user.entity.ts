@@ -1,19 +1,23 @@
 import { UserEmail } from '../value-objects/email.vo';
 import { UserName } from '../value-objects/name.vo';
 import { UserPassword } from '../value-objects/password.vo';
-import type { UserRole, User as UserType } from '@packages/api-db';
 
-type UserTypeOverrides = {
-  password: UserPassword;
-  email: UserEmail;
+export const USER_ROLE = {
+  TEACHER: 'TEACHER',
+  STUDENT: 'STUDENT',
+} as const;
+
+export type UserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE];
+export type UserProps = {
   name: UserName;
-  id?: UserType['id'];
-  createdAt?: UserType['createdAt'];
-  updatedAt?: UserType['updatedAt'];
+  uuid: string;
+  email: UserEmail;
+  role: UserRole;
+  password: UserPassword;
+  id?: bigint;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
-
-export type UserProps = Omit<UserType, keyof UserTypeOverrides> &
-  UserTypeOverrides;
 
 export class User {
   private props: UserProps;
