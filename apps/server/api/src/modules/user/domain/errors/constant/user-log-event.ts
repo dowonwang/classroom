@@ -1,5 +1,7 @@
 export const USER_LOG_EVENT = {
   USER_EMAIL_ALREADY_EXIST: 'user.email_already_exist',
+  USER_UUID_INVALID: 'user.uuid_invalid',
+  USER_PASSWORD_HASH_INVALID: 'user.password_hash_invalid',
 } as const;
 
 export type UserLogEventMessage = Record<keyof typeof USER_LOG_EVENT, string>;

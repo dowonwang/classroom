@@ -6,6 +6,6 @@ export class FindUserByUuidHandler {
   constructor(private readonly userQueryRepository: UserQueryRepository) {}
 
   async execute(query: FindUserByUuidQuery): Promise<UserDetailDto | null> {
-    return this.userQueryRepository.getByUuid(query.uuid);
+    return this.userQueryRepository.findByUUID(query.uuid);
   }
 }

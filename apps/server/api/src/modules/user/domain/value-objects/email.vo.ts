@@ -13,7 +13,7 @@ export class UserEmail {
       email: input,
     });
 
-    if (vaildation.error) {
+    if (!vaildation.success) {
       throw ZodErrorMapper(vaildation.error, UserEmail.name);
     }
 

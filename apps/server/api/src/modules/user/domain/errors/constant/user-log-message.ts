@@ -2,4 +2,6 @@ import { UserLogEventMessage } from './user-log-event';
 
 export const USER_LOG_MESSAGE: UserLogEventMessage = {
   USER_EMAIL_ALREADY_EXIST: 'User with this email already exists',
+  USER_UUID_INVALID: 'User UUID is invaild',
+  USER_PASSWORD_HASH_INVALID: 'User password hash is invaild',
 } as const;

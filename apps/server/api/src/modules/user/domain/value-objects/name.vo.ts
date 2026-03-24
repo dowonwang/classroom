@@ -11,7 +11,7 @@ export class UserName {
   static create(input: string): UserName {
     const vaildation = nameSchema.safeParse({ name: input });
 
-    if (vaildation.error) {
+    if (!vaildation.success) {
       throw ZodErrorMapper(vaildation.error, UserName.name);
     }
 

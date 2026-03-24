@@ -6,17 +6,13 @@ import { PrismaClient } from '@packages/api-db';
 export class PrismaUserCommandRepository implements UserCommandRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async findByUuid(uuid: string): Promise<User | null> {
-    const record = await this.prisma.user.findUnique({
-      where: {
-        uuid,
-      },
-    });
+  async findById(id: bigint): Promise<User | null> {
+    const record = await this.prisma.user.findUnique({ where: { id } });
 
     return record ? UserPrismaMapper.toDomain(record) : null;
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async existsByEmail(email: string): Promise<User | null> {
     const record = await this.prisma.user.findFirst({
       where: { email },
     });
@@ -26,7 +22,7 @@ export class PrismaUserCommandRepository implements UserCommandRepository {
 
   async save(user: User): Promise<void> {
     const data = {
-      uuid: user.uuid,
+      uuid: user.uuid.getValue(),
       email: user.email.getValue(),
       name: user.name.getValue(),
       password: user.password.getValue(),

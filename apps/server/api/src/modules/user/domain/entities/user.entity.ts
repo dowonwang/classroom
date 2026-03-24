@@ -1,9 +1,10 @@
 import { UserEmail } from '../value-objects/email.vo';
 import { UserName } from '../value-objects/name.vo';
 import { UserPassword } from '../value-objects/password.vo';
+import { UserUUID } from '../value-objects/uuid.vo';
 
 export type UserProps = {
-  uuid: string;
+  uuid: UserUUID;
   email: UserEmail;
   password: UserPassword;
   name: UserName;
@@ -36,7 +37,7 @@ export class User {
     return this.props.id;
   }
 
-  get uuid(): UserProps['uuid'] {
+  get uuid(): UserUUID {
     return this.props.uuid;
   }
 

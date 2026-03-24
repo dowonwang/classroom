@@ -1,4 +1,4 @@
-import { ZodErrorMapper } from '../../../../shared/http/mapper/zod-error.mapper';
+import { InvalidPasswordHash } from '../errors/invalid-password-hash.error';
 import z from 'zod';
 
 const passewordHashSchema = z
@@ -11,9 +11,8 @@ export class UserPassword {
   static fromHashed(hashed: string) {
     const vaildation = passewordHashSchema.safeParse(hashed);
 
-    // TODO: 500으로 처리 변경해야함
-    if (vaildation.error) {
-      throw ZodErrorMapper(vaildation.error, UserPassword.name);
+    if (!vaildation.success) {
+      throw new InvalidPasswordHash(UserPassword.name);
     }
 
     return new UserPassword(vaildation.data);
