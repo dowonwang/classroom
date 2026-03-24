@@ -19,20 +19,12 @@ model User {
   /// 외부에 노출되는 고유아이디
   uuid String @unique @default(uuid()) @db.Uuid
 
-  email    String   @unique
+  email    String @unique
   name     String
-  role     UserRole @default(STUDENT)
   password String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("user")
-}
-
-enum UserRole {
-  STUDENT
-  TEACHER
-
-  @@map("user_role")
 }

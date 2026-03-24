@@ -15,7 +15,6 @@ http:
       {
         "email": "test@test.com",
         "name": "tester",
-        "role": "STUDENT",
         "password": "tester1234"
       }
   auth: inherit

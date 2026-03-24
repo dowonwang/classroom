@@ -29,7 +29,6 @@ export class PrismaUserCommandRepository implements UserCommandRepository {
       uuid: user.uuid,
       email: user.email.getValue(),
       name: user.name.getValue(),
-      role: user.role,
       password: user.password.getValue(),
     };
 

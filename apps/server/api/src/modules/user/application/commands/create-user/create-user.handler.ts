@@ -33,7 +33,6 @@ export class CreateUserHandler {
       email,
       name,
       password: UserPassword.fromHashed(hashedPassword),
-      role: command.role,
     });
 
     await this.userCommandRepository.save(user);

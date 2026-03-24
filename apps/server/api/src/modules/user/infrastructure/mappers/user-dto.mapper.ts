@@ -7,7 +7,6 @@ export class UserDtoMapper {
       uuid: record.uuid,
       email: record.email,
       name: record.name,
-      role: record.role,
       createdAt: record.createdAt,
       updatedAt: record.updatedAt,
     };
