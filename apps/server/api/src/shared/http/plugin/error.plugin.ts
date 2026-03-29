@@ -1,5 +1,5 @@
 import { AppError } from '../../errors/app.error';
-import { UnprocessableContent } from '../../errors/common.erorr';
+import { NotFoundError, UnprocessableContent } from '../../errors/common.erorr';
 import { LOG_EVENT } from '../../logger/constant/log-event';
 import { LOG_MESSAGE } from '../../logger/constant/log-message';
 import { logger } from '../../logger/logger';
@@ -9,7 +9,10 @@ import { PrismaErrorMapper } from '../mapper/prisma-error-mapper';
 import { VaildationErrorMapper } from '../mapper/vaildation-error.mapper';
 import { Prisma } from '@packages/api-db';
 import { randomUUIDv7 } from 'bun';
-import Elysia, { ValidationError } from 'elysia';
+import Elysia, {
+  NotFoundError as ElysiaNotFoundError,
+  ValidationError,
+} from 'elysia';
 
 export const errorPlugin = new Elysia().onError(
   { as: 'scoped' },
@@ -47,14 +50,6 @@ export const errorPlugin = new Elysia().onError(
     if (error instanceof AppError) {
       set.status = error.status;
 
-      if (error instanceof UnprocessableContent) {
-        return ApiResponseBuilder.error({
-          message: error.userMessage,
-          details: error.details,
-          requestId: uuid,
-        });
-      }
-
       logger.error(
         {
           event: error.event,
@@ -69,9 +64,46 @@ export const errorPlugin = new Elysia().onError(
         error.message,
       );
 
+      if (error instanceof UnprocessableContent) {
+        return ApiResponseBuilder.error({
+          message: error.userMessage,
+          details: error.details,
+          requestId: uuid,
+        });
+      }
+
       return ApiResponseBuilder.error({
         message: error.userMessage,
         requestId: uuid,
+      });
+    }
+
+    if (error instanceof ElysiaNotFoundError) {
+      const appError = new NotFoundError({
+        detail: error.code,
+        cause: error.cause,
+      });
+
+      set.status = appError.status;
+
+      logger.error(
+        {
+          event: appError.event,
+          requestId: uuid,
+          method: request.method,
+          path,
+          searchParams,
+          status: appError.status,
+          details: appError.details,
+          scope: 'HTTP',
+        },
+        appError.message,
+      );
+
+      return ApiResponseBuilder.error({
+        message: appError.userMessage,
+        requestId: uuid,
+        details: appError.details,
       });
     }
 

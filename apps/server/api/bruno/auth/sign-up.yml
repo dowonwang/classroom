@@ -1,11 +1,11 @@
 info:
-  name: create-user
+  name: sign-up
   type: http
   seq: 1
 
 http:
   method: POST
-  url: "{{process.env.BASE_URL}}/users"
+  url: "{{process.env.BASE_URL}}/auth/sign-up"
   headers:
     - name: Content-Type
       value: application/json
@@ -13,7 +13,7 @@ http:
     type: json
     data: |-
       {
-        "email": "test@test.com",
+        "email": "test04@test.com",
         "name": "tester",
         "password": "tester1234"
       }

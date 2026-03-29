@@ -12,8 +12,8 @@ export class PrismaUserCommandRepository implements UserCommandRepository {
     return record ? UserPrismaMapper.toDomain(record) : null;
   }
 
-  async existsByEmail(email: string): Promise<User | null> {
-    const record = await this.prisma.user.findFirst({
+  async findByEmail(email: string): Promise<User | null> {
+    const record = await this.prisma.user.findUnique({
       where: { email },
     });
 
