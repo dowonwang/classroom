@@ -52,4 +52,12 @@ export class User {
   get password(): UserPassword {
     return this.props.password;
   }
+
+  get createdAt(): Date | undefined {
+    return this.props?.createdAt;
+  }
+
+  get updatedAt(): Date | undefined {
+    return this.props?.updatedAt;
+  }
 }
