@@ -1,7 +1,5 @@
-export type AccessTokenPayload = {
-  sub: string;
-};
+import { AccessTokenClaims } from '../value-objects/access-token-claims.vo';
 
 export interface TokenIssuer {
-  issueAccessToken(payload: AccessTokenPayload): Promise<string>;
+  issueAccessToken(claims: AccessTokenClaims): Promise<string>;
 }

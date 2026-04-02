@@ -2,7 +2,7 @@ import { PrismaUserCommandRepository } from '../user/infrastructure/repositories
 import { SignInHandler } from './application/commands/sign-in/sign-in.handler';
 import { SignUpHandler } from './application/commands/sign-up/sign-up.handler';
 import { BcryptPasswordHasher } from './infrastructure/services/bcrypt-password-hasher';
-import { JoseTokenIssuer } from './infrastructure/services/jose-token-issuer';
+import { JwtTokenIssuer } from './infrastructure/services/jwt-token-issuer';
 import { createAuthController } from './presentation/auth.controller';
 import { prismaApiClient } from '@packages/api-db';
 import 'dotenv/config';
@@ -12,7 +12,7 @@ export default function authModule() {
     prismaApiClient,
   );
   const passwordHasher = new BcryptPasswordHasher();
-  const tokenIssuer = new JoseTokenIssuer(
+  const tokenIssuer = new JwtTokenIssuer(
     process.env.JWT_SECRET,
     process.env.JWT_EXPIRES,
   );

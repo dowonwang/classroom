@@ -5,6 +5,7 @@ import { UserCommandRepository } from '../../../../user/domain/repositories/user
 import { UserEmail } from '../../../../user/domain/value-objects/email.vo';
 import { PasswordHaser } from '../../../domain/services/password-hasher';
 import { TokenIssuer } from '../../../domain/services/token-issuer';
+import { AccessTokenClaims } from '../../../domain/value-objects/access-token-claims.vo';
 import { SignInCommand } from './sign-in.command';
 
 export class SignInHandler {
@@ -34,9 +35,11 @@ export class SignInHandler {
       throw new InvaildCredentials(SignInHandler.name);
     }
 
-    const accessToken = await this.tokenIssuer.issueAccessToken({
+    const claims = AccessTokenClaims.create({
       sub: user.uuid.getValue(),
     });
+
+    const accessToken = await this.tokenIssuer.issueAccessToken(claims);
 
     return {
       accessToken,

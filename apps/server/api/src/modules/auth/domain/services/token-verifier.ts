@@ -1,5 +1,5 @@
-import { AccessTokenPayload } from './token-issuer';
+import { AccessTokenClaims } from '../value-objects/access-token-claims.vo';
 
 export interface TokenVerifier {
-  verifyAccessToken(token: string): Promise<AccessTokenPayload>;
+  verifyAccessToken(token: string): Promise<AccessTokenClaims>;
 }
