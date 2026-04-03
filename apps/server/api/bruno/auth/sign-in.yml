@@ -5,8 +5,27 @@ info:
 
 http:
   method: POST
-  url: ""
+  url: "{{process.env.BASE_URL}}/auth/sign-in"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "test@test.com",
+        "password": "tester1234"
+      }
   auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const resStatus = res.getStatus();
+
+        if(resStatus === 200) {
+          const accessToken = res.getBody().data.accessToken;
+          
+          bru.setEnvVar("ACCESS_TOKEN", accessToken);
+        }
 
 settings:
   encodeUrl: true

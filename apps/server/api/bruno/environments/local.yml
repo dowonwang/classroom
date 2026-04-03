@@ -1,4 +1,6 @@
 name: local
 variables:
   - name: BASE_URL
-    value: '{{process.env.BASE_URL}}'
+    value: "{{process.env.BASE_URL}}"
+  - secret: true
+    name: ACCESS_TOKEN
