@@ -20,6 +20,7 @@ export class BadRequestError extends AppError {
       userMessage: options.userMessage ?? '잘못된 요청입니다.',
       details: options.detail,
       scope: options.scope,
+      cause: options.cause,
     });
   }
 }
@@ -33,6 +34,7 @@ export class UnauthorizedError extends AppError {
       userMessage: options.userMessage ?? '인증이 필요합니다.',
       details: options.detail,
       scope: options.scope,
+      cause: options.cause,
     });
   }
 }
@@ -46,6 +48,7 @@ export class ForbiddenError extends AppError {
       userMessage: options.userMessage ?? '접근 권한이 없습니다.',
       details: options.detail,
       scope: options.scope,
+      cause: options.cause,
     });
   }
 }
@@ -59,6 +62,7 @@ export class NotFoundError extends AppError {
       userMessage: '요청한 리소스를 찾을 수 없습니다.',
       details: options.detail,
       scope: options.scope,
+      cause: options.cause,
     });
   }
 }
@@ -72,6 +76,7 @@ export class ConflictError extends AppError {
       userMessage: '이미 존재하는 데이터입니다.',
       details: options.detail,
       scope: options.scope,
+      cause: options.cause,
     });
   }
 }
@@ -85,6 +90,7 @@ export class UnprocessableContent extends AppError {
       userMessage: options.userMessage ?? '유효성 검사 실패',
       details: options.detail,
       scope: options.scope,
+      cause: options.cause,
     });
   }
 }

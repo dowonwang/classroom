@@ -1,19 +1,14 @@
 import { UserEmail } from '../value-objects/email.vo';
 import { UserName } from '../value-objects/name.vo';
 import { UserPassword } from '../value-objects/password.vo';
+import { UserUUID } from '../value-objects/uuid.vo';
 
-export const USER_ROLE = {
-  TEACHER: 'TEACHER',
-  STUDENT: 'STUDENT',
-} as const;
-
-export type UserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE];
 export type UserProps = {
-  name: UserName;
-  uuid: string;
+  uuid: UserUUID;
   email: UserEmail;
-  role: UserRole;
   password: UserPassword;
+  name: UserName;
+
   id?: bigint;
   createdAt?: Date;
   updatedAt?: Date;
@@ -34,10 +29,6 @@ export class User {
     this.props.name = name;
   }
 
-  changeRole(role: UserRole) {
-    this.props.role = role;
-  }
-
   changePassword(password: UserPassword) {
     this.props.password = password;
   }
@@ -46,7 +37,7 @@ export class User {
     return this.props.id;
   }
 
-  get uuid(): UserProps['uuid'] {
+  get uuid(): UserUUID {
     return this.props.uuid;
   }
 
@@ -58,11 +49,15 @@ export class User {
     return this.props.name;
   }
 
-  get role(): UserProps['role'] {
-    return this.props.role;
-  }
-
   get password(): UserPassword {
     return this.props.password;
+  }
+
+  get createdAt(): Date | undefined {
+    return this.props?.createdAt;
+  }
+
+  get updatedAt(): Date | undefined {
+    return this.props?.updatedAt;
   }
 }

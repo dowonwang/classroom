@@ -14,6 +14,12 @@ export const LOG_EVENT = {
   APP_START: 'app.start',
   APP_ERROR_OCCURRED: 'app.error.occurred',
   APP_UNHANDLED_EXCEPTION: 'app.unhandled.exception',
+
+  PRISMA_CLIENT_KNOWN_REQUEST: 'prisma_client.known_request',
+  PRISMA_CLIENT_UNKNOWN_REQUEST: 'prisma_client.unknown_request',
+  PRISMA_CLINET_RUST_PANIC: 'prisma_client.rust_panic',
+  PRISMA_CLIENT_INITIALIZATION: 'prisma_client.initialization',
+  PRISMA_CLIENT_VALIDATION: 'prisma_client.validation',
 } as const;
 
 export type LogEventMessage = Record<keyof typeof LOG_EVENT, string>;

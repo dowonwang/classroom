@@ -2,7 +2,7 @@ import { ZodErrorMapper } from '../../../../shared/http/mapper/zod-error.mapper'
 import z from 'zod';
 
 const nameSchema = z.object({
-  name: z.string().min(1).max(20),
+  name: z.string().min(5).max(20),
 });
 
 export class UserName {
@@ -11,7 +11,7 @@ export class UserName {
   static create(input: string): UserName {
     const vaildation = nameSchema.safeParse({ name: input });
 
-    if (vaildation.error) {
+    if (!vaildation.success) {
       throw ZodErrorMapper(vaildation.error, UserName.name);
     }
 

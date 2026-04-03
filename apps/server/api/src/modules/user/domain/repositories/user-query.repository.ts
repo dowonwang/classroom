@@ -1,5 +1,5 @@
-import { UserDetailDto } from '../../application/dto/user-detail.dto';
+import { User } from '../entities/user.entity';
 
 export interface UserQueryRepository {
-  getByUuid(uuid: string): Promise<UserDetailDto | null>;
+  findByUUID(uuid: string): Promise<User | null>;
 }
