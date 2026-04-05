@@ -2,10 +2,12 @@ import { User } from '../../domain/entities/user.entity';
 import { UserTimeStampsRequired } from '../../domain/errors/user-timestamps-required.error';
 import { UserDetailDto } from '../dto/user-detail.dto';
 
-export class UserDtoMapper {
-  static fromEntity(entity: User): UserDetailDto {
+const name = Symbol('UserDtoMapper');
+
+export const UserDtoMapper = {
+  fromEntity(entity: User): UserDetailDto {
     if (!(entity.createdAt && entity.updatedAt)) {
-      throw new UserTimeStampsRequired(UserDtoMapper.name);
+      throw new UserTimeStampsRequired(name.toString());
     }
 
     return {
@@ -15,5 +17,5 @@ export class UserDtoMapper {
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     };
-  }
-}
+  },
+} as const;

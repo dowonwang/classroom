@@ -59,7 +59,7 @@ export const errorPlugin = new Elysia().onError(
           searchParams,
           status: error.status,
           details: error.details,
-          scope: error.scope || 'APP',
+          scope: error.scope ?? 'APP',
         },
         error.message,
       );
@@ -125,7 +125,7 @@ export const errorPlugin = new Elysia().onError(
             searchParams,
             status: prismaError.status,
             details: prismaError.details,
-            scope: prismaError.scope || 'APP',
+            scope: prismaError.scope ?? 'APP',
           },
           prismaError.message,
         );
@@ -139,7 +139,7 @@ export const errorPlugin = new Elysia().onError(
             searchParams,
             status: prismaError.status,
             details: prismaError.details,
-            scope: prismaError.scope || 'APP',
+            scope: prismaError.scope ?? 'APP',
             err: prismaError.cause,
           },
           prismaError.message,
@@ -164,6 +164,7 @@ export const errorPlugin = new Elysia().onError(
         status: set.status,
         err: error,
       },
+      // eslint-disable-next-line
       (error as any)?.message || LOG_MESSAGE.APP_ERROR_OCCURRED,
     );
 

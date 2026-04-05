@@ -2,9 +2,9 @@ import { UnauthorizedError } from '../../../../shared/errors/common.erorr';
 import { JwtTokenVerifier } from '../services/jwt-token-verifier';
 import Elysia from 'elysia';
 
-export type AuthUser = {
+export interface AuthUser {
   uuid: string;
-};
+}
 
 export function createAuthGuard(tokenVerifier: JwtTokenVerifier) {
   const authGuard = new Elysia({ name: 'auth.guard' })

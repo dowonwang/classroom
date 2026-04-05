@@ -12,7 +12,7 @@ export class JwtTokenIssuer implements TokenIssuer {
   constructor(
     secret: string | null | undefined,
     expiresIn: string | null | undefined,
-    private readonly alg: string = 'HS256',
+    private readonly alg = 'HS256',
   ) {
     if (!secret) {
       throw new MissingJwtSecret(JwtTokenIssuer.name);

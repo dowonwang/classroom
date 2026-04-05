@@ -1,25 +1,25 @@
-export type ApiResponseMeta = {
+export interface ApiResponseMeta {
   unixTimestamp: number;
   requestId?: string;
-};
+}
 
-export type ApiSuccessResponse<T> = {
+export interface ApiSuccessResponse<T> {
   success: true;
   data: T;
   error: null;
   meta?: ApiResponseMeta;
-};
+}
 
-export type ApiErrorDetail = {
+export interface ApiErrorDetail {
   message: string;
   details?: unknown;
-};
+}
 
-export type ApiErrorResponse = {
+export interface ApiErrorResponse {
   success: false;
   data: null;
   error: ApiErrorDetail;
   meta?: ApiResponseMeta;
-};
+}
 
 export type ApiResponse<T> = ApiErrorResponse | ApiSuccessResponse<T>;

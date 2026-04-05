@@ -7,11 +7,11 @@ import { MeHandler } from '../application/queries/me/me.handler';
 import { AuthHttpModel } from './auth.http-model';
 import Elysia from 'elysia';
 
-type AuthControllerDependencies = {
+interface AuthControllerDependencies {
   signUpHandler: SignUpHandler;
   signInHandler: SignInHandler;
   meHandler: MeHandler;
-};
+}
 
 export function createAuthController(deps: AuthControllerDependencies) {
   return (

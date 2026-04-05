@@ -5,8 +5,8 @@ import { UserPassword } from '../../domain/value-objects/password.vo';
 import { UserUUID } from '../../domain/value-objects/uuid.vo';
 import { User as PrismaUser } from '@packages/api-db';
 
-export class UserEntityMapper {
-  static fromRecord(record: PrismaUser): User {
+export const UserEntityMapper = {
+  fromRecord(record: PrismaUser): User {
     return User.create({
       id: record.id,
       createdAt: record.createdAt,
@@ -16,5 +16,5 @@ export class UserEntityMapper {
       name: UserName.create(record.name),
       password: UserPassword.fromHashed(record.password),
     });
-  }
-}
+  },
+} as const;

@@ -1,4 +1,4 @@
-export type AppErrorOptions = {
+export interface AppErrorOptions {
   event: string;
   status: number;
   message: string;
@@ -6,7 +6,7 @@ export type AppErrorOptions = {
   details?: unknown;
   cause?: unknown;
   scope?: string;
-};
+}
 
 export class AppError extends Error {
   public readonly status: number;

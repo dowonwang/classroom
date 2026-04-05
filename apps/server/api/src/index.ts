@@ -5,9 +5,11 @@ import { logger } from './shared/logger/logger';
 import 'dotenv/config';
 import { Elysia } from 'elysia';
 
-const app = new Elysia().use(authModule).listen(process.env.APP_PORT || 3000);
+const app = new Elysia().use(authModule).listen(process.env.APP_PORT ?? 3000);
 
-logger.info(
-  { event: LOG_EVENT.APP_START },
-  `🦊 ${LOG_MESSAGE.APP_START} ${app.server?.hostname}:${app.server?.port}`,
-);
+if (app.server?.hostname && app.server.port) {
+  logger.info(
+    { event: LOG_EVENT.APP_START },
+    `🦊 ${LOG_MESSAGE.APP_START} ${app.server.hostname}:${app.server.port.toString()}`,
+  );
+}

@@ -1,6 +1,9 @@
 import { InvalidAccessTokenClaims } from '../../domain/errors/invalid-access-token-claims.error';
 import { TokenVerifier } from '../../domain/services/token-verifier';
-import { AccessTokenClaims } from '../../domain/value-objects/access-token-claims.vo';
+import {
+  AccessTokenClaims,
+  AccessTokenPayload,
+} from '../../domain/value-objects/access-token-claims.vo';
 import { MissingJwtSecret } from '../errors/missing-jwt-secret.error';
 import { jwtVerify } from 'jose';
 
@@ -22,10 +25,10 @@ export class JwtTokenVerifier implements TokenVerifier {
           algorithms: ['HS256'],
         });
 
-        const claims = AccessTokenClaims.create(payload as unknown);
+        const claims = AccessTokenClaims.create(payload as AccessTokenPayload);
 
         return claims;
-      } catch (error) {
+      } catch {
         throw new InvalidAccessTokenClaims(JwtTokenVerifier.name);
       }
     };

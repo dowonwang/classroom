@@ -15,7 +15,7 @@ const rootLogger = pino({
       : undefined,
 }).child({ scope: 'APP' });
 
-type BaseLogContext = {
+interface BaseLogContext {
   event?: string;
   scope?: string;
   requestId?: string;
@@ -26,9 +26,9 @@ type BaseLogContext = {
   userId?: string;
   details?: unknown;
   err?: unknown;
-};
+}
 
-type ScopedLogger = {
+interface ScopedLogger {
   fatal: (context: BaseLogContext, message: string) => void;
   error: (context: BaseLogContext, message: string) => void;
   warn: (context: BaseLogContext, message: string) => void;
@@ -36,16 +36,30 @@ type ScopedLogger = {
   debug: (context: BaseLogContext, message: string) => void;
   trace: (context: BaseLogContext, message: string) => void;
   silent: (context: BaseLogContext, message: string) => void;
-};
+}
 
 const createScopedLogger = (logger: Logger): ScopedLogger => ({
-  fatal: (context, message) => logger.fatal(context, message),
-  error: (context, message) => logger.error(context, message),
-  warn: (context, message) => logger.warn(context, message),
-  info: (context, message) => logger.info(context, message),
-  debug: (context, message) => logger.debug(context, message),
-  trace: (context, message) => logger.trace(context, message),
-  silent: (context, message) => logger.silent(context, message),
+  fatal: (context, message) => {
+    logger.fatal(context, message);
+  },
+  error: (context, message) => {
+    logger.error(context, message);
+  },
+  warn: (context, message) => {
+    logger.warn(context, message);
+  },
+  info: (context, message) => {
+    logger.info(context, message);
+  },
+  debug: (context, message) => {
+    logger.debug(context, message);
+  },
+  trace: (context, message) => {
+    logger.trace(context, message);
+  },
+  silent: (context, message) => {
+    logger.silent(context, message);
+  },
 });
 
 export const logger = createScopedLogger(rootLogger);
