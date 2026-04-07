@@ -1,7 +1,7 @@
-import { UserEmail } from '../value-objects/email.vo';
-import { UserName } from '../value-objects/name.vo';
-import { UserPassword } from '../value-objects/password.vo';
-import { UserUUID } from '../value-objects/uuid.vo';
+import type { UserEmail } from '$modules/user/domain/value-objects/email.vo';
+import type { UserName } from '$modules/user/domain/value-objects/name.vo';
+import type { UserPassword } from '$modules/user/domain/value-objects/password.vo';
+import type { UserUUID } from '$modules/user/domain/value-objects/uuid.vo';
 
 export interface UserProps {
   uuid: UserUUID;

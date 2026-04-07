@@ -1,5 +1,6 @@
-import { UnprocessableContent } from '../../errors/common.erorr';
-import { ZodError } from 'zod';
+import { UnprocessableContent } from '$shared/errors/common.erorr';
+
+import type { ZodError } from 'zod';
 
 export function ZodErrorMapper(
   error: ZodError,

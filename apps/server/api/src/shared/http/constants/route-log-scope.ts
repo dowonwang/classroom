@@ -1,5 +1,6 @@
 export const ROUTE_LOG_SCOPE = {
   '/users': 'UserController',
+  '/auth': 'AuthController',
 } as const satisfies Record<string, string>;
 
 const sortedRouteLogScope = Object.entries(ROUTE_LOG_SCOPE).sort(

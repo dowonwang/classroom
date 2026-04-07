@@ -1,18 +1,23 @@
-import { AppError } from '../../errors/app.error';
-import { NotFoundError, UnprocessableContent } from '../../errors/common.erorr';
-import { LOG_EVENT } from '../../logger/constant/log-event';
-import { LOG_MESSAGE } from '../../logger/constant/log-message';
-import { logger } from '../../logger/logger';
-import { ApiResponseBuilder } from '../../responses/api-response-builder';
-import { getRouteLogScope } from '../constants/route-log-scope';
-import { PrismaErrorMapper } from '../mapper/prisma-error-mapper';
-import { VaildationErrorMapper } from '../mapper/vaildation-error.mapper';
 import { Prisma } from '@packages/api-db';
 import { randomUUIDv7 } from 'bun';
-import Elysia, {
+import {
+  Elysia,
   NotFoundError as ElysiaNotFoundError,
   ValidationError,
 } from 'elysia';
+
+import { AppError } from '$shared/errors/app.error';
+import {
+  NotFoundError,
+  UnprocessableContent,
+} from '$shared/errors/common.erorr';
+import { getRouteLogScope } from '$shared/http/constants/route-log-scope';
+import { PrismaErrorMapper } from '$shared/http/mapper/prisma-error-mapper';
+import { VaildationErrorMapper } from '$shared/http/mapper/vaildation-error.mapper';
+import { LOG_EVENT } from '$shared/logger/constant/log-event';
+import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
+import { logger } from '$shared/logger/logger';
+import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
 export const errorPlugin = new Elysia().onError(
   { as: 'scoped' },

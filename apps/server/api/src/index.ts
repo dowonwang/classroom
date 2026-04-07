@@ -1,9 +1,12 @@
+import 'dotenv/config';
+
+import { Elysia } from 'elysia';
+
 import authModule from './modules/auth';
 import { LOG_EVENT } from './shared/logger/constant/log-event';
 import { LOG_MESSAGE } from './shared/logger/constant/log-message';
 import { logger } from './shared/logger/logger';
-import 'dotenv/config';
-import { Elysia } from 'elysia';
+
 
 const app = new Elysia().use(authModule).listen(process.env.APP_PORT ?? 3000);
 

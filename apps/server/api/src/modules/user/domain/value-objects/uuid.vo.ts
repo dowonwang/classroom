@@ -1,6 +1,7 @@
-import { InvalidUserUUID } from '../errors/inavalid-user-uuid.error';
 import { randomUUIDv7 } from 'bun';
-import z from 'zod';
+import { z } from 'zod';
+
+import { InvalidUserUUID } from '$modules/user/domain/errors/inavalid-user-uuid.error';
 
 const uuidSchema = z.uuidv7();
 

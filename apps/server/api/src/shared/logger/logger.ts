@@ -1,4 +1,6 @@
-import pino, { Logger } from 'pino';
+import { pino } from 'pino';
+
+import type { Logger } from 'pino';
 
 const rootLogger = pino({
   level: process.env.NODE_ENV !== 'production' ? 'trace' : 'info',

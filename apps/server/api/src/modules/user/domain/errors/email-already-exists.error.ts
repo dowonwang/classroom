@@ -1,7 +1,9 @@
-import { ConflictError } from '../../../../shared/errors/common.erorr';
-import { User } from '../entities/user.entity';
+import { ConflictError } from '$shared/errors/common.erorr';
+
 import { USER_LOG_EVENT } from './constant/user-log-event';
 import { USER_LOG_MESSAGE } from './constant/user-log-message';
+
+import type { User } from '$modules/user/domain/entities/user.entity';
 
 export class EmailAlreadyExists extends ConflictError {
   constructor(scope: string, userId: User['id']) {

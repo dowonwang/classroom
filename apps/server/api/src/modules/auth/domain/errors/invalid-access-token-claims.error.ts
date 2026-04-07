@@ -1,4 +1,5 @@
-import { UnauthorizedError } from '../../../../shared/errors/common.erorr';
+import { UnauthorizedError } from '$shared/errors/common.erorr';
+
 import { AUTH_LOG_EVENT } from './constant/auth-log-event';
 import { AUTH_LOG_MESSAGE } from './constant/auth-log-message';
 

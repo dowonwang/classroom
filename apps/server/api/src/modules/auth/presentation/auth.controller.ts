@@ -1,11 +1,14 @@
-import { authGuard } from '..';
-import { errorPlugin } from '../../../shared/http/plugin/error.plugin';
-import { ApiResponseBuilder } from '../../../shared/responses/api-response-builder';
-import { SignInHandler } from '../application/commands/sign-in/sign-in.handler';
-import { SignUpHandler } from '../application/commands/sign-up/sign-up.handler';
-import { MeHandler } from '../application/queries/me/me.handler';
+import { Elysia } from 'elysia';
+
+import { authGuard } from '$modules/auth';
+import { errorPlugin } from '$shared/http/plugin/error.plugin';
+import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
+
 import { AuthHttpModel } from './auth.http-model';
-import Elysia from 'elysia';
+
+import type { SignInHandler } from '$modules/auth/application/commands/sign-in/sign-in.handler';
+import type { SignUpHandler } from '$modules/auth/application/commands/sign-up/sign-up.handler';
+import type { MeHandler } from '$modules/auth/application/queries/me/me.handler';
 
 interface AuthControllerDependencies {
   signUpHandler: SignUpHandler;

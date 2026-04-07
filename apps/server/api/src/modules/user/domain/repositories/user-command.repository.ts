@@ -1,4 +1,4 @@
-import { User } from '../entities/user.entity';
+import type { User } from '$modules/user/domain/entities/user.entity';
 
 export interface UserCommandRepository {
   findById(id: bigint): Promise<User | null>;

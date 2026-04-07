@@ -1,8 +1,10 @@
-import { TokenIssuer } from '../../domain/services/token-issuer';
-import { AccessTokenClaims } from '../../domain/value-objects/access-token-claims.vo';
-import { MissingJwtExpires } from '../errors/missing-jwt-expires.error';
-import { MissingJwtSecret } from '../errors/missing-jwt-secret.error';
 import { SignJWT } from 'jose';
+
+import { MissingJwtExpires } from '$modules/auth/infrastructure/errors/missing-jwt-expires.error';
+import { MissingJwtSecret } from '$modules/auth/infrastructure/errors/missing-jwt-secret.error';
+
+import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
+import type { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
 
 export class JwtTokenIssuer implements TokenIssuer {
   public readonly issueAccessToken: (

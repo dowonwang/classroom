@@ -1,7 +1,8 @@
-import { User } from '../../domain/entities/user.entity';
-import { UserQueryRepository } from '../../domain/repositories/user-query.repository';
-import { UserEntityMapper } from '../mappers/user-entity.mapper';
-import { PrismaClient } from '@packages/api-db';
+import { UserEntityMapper } from '$modules/user/infrastructure/mappers/user-entity.mapper';
+
+import type { User } from '$modules/user/domain/entities/user.entity';
+import type { UserQueryRepository } from '$modules/user/domain/repositories/user-query.repository';
+import type { PrismaClient } from '@packages/api-db';
 
 export class PrismaUserQueryRepository implements UserQueryRepository {
   constructor(private readonly prisma: PrismaClient) {}

@@ -1,4 +1,4 @@
-import { LogEventMessage } from './log-event';
+import type { LogEventMessage } from './log-event';
 
 export const LOG_MESSAGE: LogEventMessage = {
   HTTP_REQUEST_RECEIVED: 'Request received',

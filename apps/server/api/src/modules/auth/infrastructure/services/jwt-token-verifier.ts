@@ -1,11 +1,11 @@
-import { InvalidAccessTokenClaims } from '../../domain/errors/invalid-access-token-claims.error';
-import { TokenVerifier } from '../../domain/services/token-verifier';
-import {
-  AccessTokenClaims,
-  AccessTokenPayload,
-} from '../../domain/value-objects/access-token-claims.vo';
-import { MissingJwtSecret } from '../errors/missing-jwt-secret.error';
 import { jwtVerify } from 'jose';
+
+import { InvalidAccessTokenClaims } from '$modules/auth/domain/errors/invalid-access-token-claims.error';
+import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
+import { MissingJwtSecret } from '$modules/auth/infrastructure/errors/missing-jwt-secret.error';
+
+import type { TokenVerifier } from '$modules/auth/domain/services/token-verifier';
+import type { AccessTokenPayload } from '$modules/auth/domain/value-objects/access-token-claims.vo';
 
 export class JwtTokenVerifier implements TokenVerifier {
   public readonly verifyAccessToken: (
