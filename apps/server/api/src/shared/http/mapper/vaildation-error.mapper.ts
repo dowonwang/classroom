@@ -1,5 +1,6 @@
-import { BadRequestError } from '../../errors/common.erorr';
-import { ValidationError } from 'elysia';
+import { BadRequestError } from '$shared/errors/common.erorr';
+
+import type { ValidationError } from 'elysia';
 
 export function VaildationErrorMapper(error: ValidationError): BadRequestError {
   const detail = error.detail('Vaildation', false);

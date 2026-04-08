@@ -1,12 +1,13 @@
-import { UserDetailDto } from '../../../../user/application/dto/user-detail.dto';
-import { UserDtoMapper } from '../../../../user/application/mappper/user-dto.mapper';
-import { InvaildCredentials } from '../../../../user/domain/errors/invaild-credentials.error';
-import { UserCommandRepository } from '../../../../user/domain/repositories/user-command.repository';
-import { UserEmail } from '../../../../user/domain/value-objects/email.vo';
-import { PasswordHaser } from '../../../domain/services/password-hasher';
-import { TokenIssuer } from '../../../domain/services/token-issuer';
-import { AccessTokenClaims } from '../../../domain/value-objects/access-token-claims.vo';
-import { SignInCommand } from './sign-in.command';
+import { AccessTokenClaims } from '$modules/auth/domain/value-objects/access-token-claims.vo';
+import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
+import { InvaildCredentials } from '$modules/user/domain/errors/invaild-credentials.error';
+import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
+
+import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
+import type { TokenIssuer } from '$modules/auth/domain/services/token-issuer';
+import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
+import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
+import type { SignInCommand } from './sign-in.command';
 
 export class SignInHandler {
   constructor(

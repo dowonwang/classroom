@@ -1,12 +1,14 @@
-import { AppError } from '../../errors/app.error';
+import { Prisma } from '@packages/api-db';
+
 import {
   BadRequestError,
   ConflictError,
   InternalServerError,
-} from '../../errors/common.erorr';
-import { LOG_EVENT } from '../../logger/constant/log-event';
-import { LOG_MESSAGE } from '../../logger/constant/log-message';
-import { Prisma } from '@packages/api-db';
+} from '$shared/errors/common.erorr';
+import { LOG_EVENT } from '$shared/logger/constant/log-event';
+import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
+
+import type { AppError } from '$shared/errors/app.error';
 
 const SCOPE = 'PRISMA' as const;
 

@@ -1,4 +1,4 @@
-import { AuthLogEventMessage } from './auth-log-event';
+import type { AuthLogEventMessage } from './auth-log-event';
 
 export const AUTH_LOG_MESSAGE: AuthLogEventMessage = {
   AUTH_MISSING_JWT_TOKEN_SECRET:

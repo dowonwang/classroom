@@ -1,14 +1,15 @@
-import { PasswordHaser } from '../../domain/services/password-hasher';
-import bcrypt from 'bcrypt';
+import { hash, compare } from 'bcrypt';
+
+import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
 
 export class BcryptPasswordHasher implements PasswordHaser {
-  constructor(private readonly saltRounds: number = 10) {}
+  constructor(private readonly saltRounds = 10) {}
 
   hash(rawPassword: string): Promise<string> {
-    return bcrypt.hash(rawPassword, this.saltRounds);
+    return hash(rawPassword, this.saltRounds);
   }
 
   compare(rawPassword: string, hashedPassword: string): Promise<boolean> {
-    return bcrypt.compare(rawPassword, hashedPassword);
+    return compare(rawPassword, hashedPassword);
   }
 }

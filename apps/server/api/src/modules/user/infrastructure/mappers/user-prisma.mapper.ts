@@ -1,12 +1,13 @@
-import { User } from '../../domain/entities/user.entity';
-import { UserEmail } from '../../domain/value-objects/email.vo';
-import { UserName } from '../../domain/value-objects/name.vo';
-import { UserPassword } from '../../domain/value-objects/password.vo';
-import { UserUUID } from '../../domain/value-objects/uuid.vo';
-import { User as PrismaUser } from '@packages/api-db';
+import { User } from '$modules/user/domain/entities/user.entity';
+import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
+import { UserName } from '$modules/user/domain/value-objects/name.vo';
+import { UserPassword } from '$modules/user/domain/value-objects/password.vo';
+import { UserUUID } from '$modules/user/domain/value-objects/uuid.vo';
 
-export class UserPrismaMapper {
-  static toDomain(record: PrismaUser): User {
+import type { User as PrismaUser } from '@packages/api-db';
+
+export const UserPrismaMapper = {
+  toDomain(record: PrismaUser): User {
     return User.create({
       ...record,
       email: UserEmail.create(record.email),
@@ -14,5 +15,5 @@ export class UserPrismaMapper {
       name: UserName.create(record.name),
       uuid: UserUUID.create(record.uuid),
     });
-  }
-}
+  },
+} as const;

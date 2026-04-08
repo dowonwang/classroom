@@ -1,7 +1,6 @@
-import { errorPlugin } from '../../../shared/http/plugin/error.plugin';
-import Elysia from 'elysia';
+import { Elysia } from 'elysia';
 
-type Dependencies = {};
+import { errorPlugin } from '$shared/http/plugin/error.plugin';
 
-export const createUserController = (deps: Dependencies) =>
+export const createUserController = () =>
   new Elysia({ prefix: '/users' }).use(errorPlugin);

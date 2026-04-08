@@ -1,5 +1,6 @@
-import { ZodErrorMapper } from '../../../../shared/http/mapper/zod-error.mapper';
-import z from 'zod';
+import { z } from 'zod';
+
+import { ZodErrorMapper } from '$shared/http/mapper/zod-error.mapper';
 
 const emailSchema = z.object({
   email: z.email(),

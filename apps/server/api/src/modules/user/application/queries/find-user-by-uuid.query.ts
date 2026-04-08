@@ -1,3 +1,3 @@
-export type FindUserByUuidQuery = {
+export interface FindUserByUuidQuery {
   uuid: string;
-};
+}

@@ -1,5 +1,10 @@
-import { PrismaUserCommandRepository } from '../user/infrastructure/repositories/prisma-user-command.repository';
-import { PrismaUserQueryRepository } from '../user/infrastructure/repositories/prisma-user-query.repository';
+import 'dotenv/config';
+
+import { prismaApiClient } from '@packages/api-db';
+
+import { PrismaUserCommandRepository } from '$modules/user/infrastructure/repositories/prisma-user-command.repository';
+import { PrismaUserQueryRepository } from '$modules/user/infrastructure/repositories/prisma-user-query.repository';
+
 import { SignInHandler } from './application/commands/sign-in/sign-in.handler';
 import { SignUpHandler } from './application/commands/sign-up/sign-up.handler';
 import { MeHandler } from './application/queries/me/me.handler';
@@ -8,8 +13,6 @@ import { BcryptPasswordHasher } from './infrastructure/services/bcrypt-password-
 import { JwtTokenIssuer } from './infrastructure/services/jwt-token-issuer';
 import { JwtTokenVerifier } from './infrastructure/services/jwt-token-verifier';
 import { createAuthController } from './presentation/auth.controller';
-import { prismaApiClient } from '@packages/api-db';
-import 'dotenv/config';
 
 // repository
 const userCommandRepository = new PrismaUserCommandRepository(prismaApiClient);

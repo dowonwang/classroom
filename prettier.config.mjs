@@ -11,7 +11,6 @@ const config = {
   jsxSingleQuote: true,
   tabWidth: 2,
   useTabs: false,
-  plugins: ['@trivago/prettier-plugin-sort-imports'],
 };
 
 export default config;

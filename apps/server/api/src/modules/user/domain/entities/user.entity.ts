@@ -1,9 +1,9 @@
-import { UserEmail } from '../value-objects/email.vo';
-import { UserName } from '../value-objects/name.vo';
-import { UserPassword } from '../value-objects/password.vo';
-import { UserUUID } from '../value-objects/uuid.vo';
+import type { UserEmail } from '$modules/user/domain/value-objects/email.vo';
+import type { UserName } from '$modules/user/domain/value-objects/name.vo';
+import type { UserPassword } from '$modules/user/domain/value-objects/password.vo';
+import type { UserUUID } from '$modules/user/domain/value-objects/uuid.vo';
 
-export type UserProps = {
+export interface UserProps {
   uuid: UserUUID;
   email: UserEmail;
   password: UserPassword;
@@ -12,7 +12,7 @@ export type UserProps = {
   id?: bigint;
   createdAt?: Date;
   updatedAt?: Date;
-};
+}
 
 export class User {
   private props: UserProps;
@@ -54,10 +54,10 @@ export class User {
   }
 
   get createdAt(): Date | undefined {
-    return this.props?.createdAt;
+    return this.props.createdAt;
   }
 
   get updatedAt(): Date | undefined {
-    return this.props?.updatedAt;
+    return this.props.updatedAt;
   }
 }

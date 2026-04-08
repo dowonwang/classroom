@@ -1,21 +1,22 @@
-import { InvalidAccessTokenClaims } from '../errors/invalid-access-token-claims.error';
-import z from 'zod';
+import { z } from 'zod';
+
+import { InvalidAccessTokenClaims } from '$modules/auth/domain/errors/invalid-access-token-claims.error';
 
 const payloadSchema = z.object({
   sub: z.uuidv7(),
 });
 
-type AccessTokenPayload = z.infer<typeof payloadSchema>;
+export type AccessTokenPayload = z.infer<typeof payloadSchema>;
 
 export class AccessTokenClaims {
   private constructor(private readonly payload: AccessTokenPayload) {}
 
-  static create(payload: AccessTokenPayload | unknown): AccessTokenClaims {
+  static create(payload: AccessTokenPayload): AccessTokenClaims {
     try {
       const vaildated = payloadSchema.parse(payload);
 
       return new AccessTokenClaims(vaildated);
-    } catch (error) {
+    } catch {
       throw new InvalidAccessTokenClaims(AccessTokenClaims.name);
     }
   }

@@ -1,15 +1,16 @@
-import { LOG_EVENT } from '../logger/constant/log-event';
-import { LOG_MESSAGE } from '../logger/constant/log-message';
+import { LOG_EVENT } from '$shared/logger/constant/log-event';
+import { LOG_MESSAGE } from '$shared/logger/constant/log-message';
+
 import { AppError } from './app.error';
 
-type CommonErrorOptions = {
+interface CommonErrorOptions {
   event?: string;
   message?: string;
   userMessage?: string;
   scope?: string;
   detail?: unknown;
   cause?: unknown;
-};
+}
 
 export class BadRequestError extends AppError {
   constructor(options: CommonErrorOptions = {}) {

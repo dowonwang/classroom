@@ -1,12 +1,13 @@
-import { User } from '../../../../user/domain/entities/user.entity';
-import { EmailAlreadyExists } from '../../../../user/domain/errors/email-already-exists.error';
-import { UserCommandRepository } from '../../../../user/domain/repositories/user-command.repository';
-import { UserEmail } from '../../../../user/domain/value-objects/email.vo';
-import { UserName } from '../../../../user/domain/value-objects/name.vo';
-import { UserPassword } from '../../../../user/domain/value-objects/password.vo';
-import { UserUUID } from '../../../../user/domain/value-objects/uuid.vo';
-import { PasswordHaser } from '../../../domain/services/password-hasher';
-import { SignUpCommand } from './sign-up.command';
+import { User } from '$modules/user/domain/entities/user.entity';
+import { EmailAlreadyExists } from '$modules/user/domain/errors/email-already-exists.error';
+import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
+import { UserName } from '$modules/user/domain/value-objects/name.vo';
+import { UserPassword } from '$modules/user/domain/value-objects/password.vo';
+import { UserUUID } from '$modules/user/domain/value-objects/uuid.vo';
+
+import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
+import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
+import type { SignUpCommand } from './sign-up.command';
 
 export class SignUpHandler {
   constructor(

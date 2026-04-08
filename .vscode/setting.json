@@ -1,0 +1,7 @@
+{
+  "js/ts.preferences.importModuleSpecifier": "shortest",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.removeUnusedImports": "always"
+  }
+}

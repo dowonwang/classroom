@@ -1,9 +1,10 @@
-import { UserDetailDto } from '../../../../user/application/dto/user-detail.dto';
-import { UserNotFound } from '../../../../user/application/errors/user-not-found.error';
-import { UserDtoMapper } from '../../../../user/application/mappper/user-dto.mapper';
-import { UserQueryRepository } from '../../../../user/domain/repositories/user-query.repository';
-import { UserUUID } from '../../../../user/domain/value-objects/uuid.vo';
-import { MeQuery } from './me.query';
+import { UserNotFound } from '$modules/user/application/errors/user-not-found.error';
+import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
+import { UserUUID } from '$modules/user/domain/value-objects/uuid.vo';
+
+import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
+import type { UserQueryRepository } from '$modules/user/domain/repositories/user-query.repository';
+import type { MeQuery } from './me.query';
 
 export class MeHandler {
   constructor(private readonly userQueryRepository: UserQueryRepository) {}

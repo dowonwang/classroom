@@ -1,5 +1,6 @@
-import { ZodErrorMapper } from '../../../../shared/http/mapper/zod-error.mapper';
-import z from 'zod';
+import { z } from 'zod';
+
+import { ZodErrorMapper } from '$shared/http/mapper/zod-error.mapper';
 
 const nameSchema = z.object({
   name: z.string().min(5).max(20),

@@ -1,12 +1,13 @@
-import { User } from '../../domain/entities/user.entity';
-import { UserEmail } from '../../domain/value-objects/email.vo';
-import { UserName } from '../../domain/value-objects/name.vo';
-import { UserPassword } from '../../domain/value-objects/password.vo';
-import { UserUUID } from '../../domain/value-objects/uuid.vo';
-import { User as PrismaUser } from '@packages/api-db';
+import { User } from '$modules/user/domain/entities/user.entity';
+import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
+import { UserName } from '$modules/user/domain/value-objects/name.vo';
+import { UserPassword } from '$modules/user/domain/value-objects/password.vo';
+import { UserUUID } from '$modules/user/domain/value-objects/uuid.vo';
 
-export class UserEntityMapper {
-  static fromRecord(record: PrismaUser): User {
+import type { User as PrismaUser } from '@packages/api-db';
+
+export const UserEntityMapper = {
+  fromRecord(record: PrismaUser): User {
     return User.create({
       id: record.id,
       createdAt: record.createdAt,
@@ -16,5 +17,5 @@ export class UserEntityMapper {
       name: UserName.create(record.name),
       password: UserPassword.fromHashed(record.password),
     });
-  }
-}
+  },
+} as const;
