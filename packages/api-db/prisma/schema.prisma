@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   /// 내부에서 사용되는 고유아이디
-  id   BigInt @id @default(autoincrement()) @map("_id")
+  id   BigInt @id @default(autoincrement())
   /// 외부에 노출되는 고유아이디
   uuid String @unique @default(uuid()) @db.Uuid
 
@@ -26,5 +26,41 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  organizationMembers OrganizationMember[]
+
   @@map("user")
+}
+
+model Organization {
+  id    BigInt @id @default(autoincrement())
+  title String
+
+  organizationMembers OrganizationMember[]
+
+  @@map("organization")
+}
+
+model OrganizationMember {
+  id BigInt @id @default(autoincrement())
+
+  organizationId BigInt
+  userId         BigInt
+  role           OrganizationMemberRole @default(MEMBER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  user         User         @relation(fields: [userId], references: [id])
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@index([organizationId])
+  @@map("organization_member")
+}
+
+enum OrganizationMemberRole {
+  ADMIN
+  MAINTAINER
+  MEMBER
 }
