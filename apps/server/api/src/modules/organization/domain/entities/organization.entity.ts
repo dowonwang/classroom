@@ -1,50 +1,79 @@
-import { z } from 'zod';
+import { OrganizationMember } from '$modules/organization/domain/entities/organization-member.entity';
 
-import type { OrganizationMember } from '$modules/organization/domain/entities/organization-member.entity';
+import type { OrganizationMemberRole } from '@packages/api-db';
 
 interface OrganizationProps {
   id: bigint;
   title: string;
-  members: OrganizationMember[];
 }
 
 export class Organization {
-  private readonly id: bigint;
-  private title: string;
   private members: OrganizationMember[] = [];
 
-  private constructor({ id, title, members }: OrganizationProps) {
-    this.validation({ id, title });
-
-    this.id = id;
-    this.title = title;
+  private constructor(
+    private props: OrganizationProps,
+    members: OrganizationMember[],
+  ) {
+    this.props = { ...props };
     this.members = [...members];
   }
 
-  static create(props: OrganizationProps): Organization {
-    return new Organization(props);
+  static create(
+    props: OrganizationProps,
+    members: OrganizationMember[],
+  ): Organization {
+    return new Organization(props, members);
   }
 
-  private validation({ id, title }: Omit<OrganizationProps, 'members'>): void {
-    const trimTitle = title.trim();
-    const schema = z.bigint().positive();
-
-    const { success } = schema.safeParse(id);
-
-    if (!success) {
-      throw new Error('잘못된 형식');
+  addMember(
+    executor: OrganizationMember,
+    entries: { userId: bigint; role: OrganizationMemberRole }[],
+  ) {
+    if (!executor.canAddMember()) {
+      throw new Error('추가 권한 없음');
     }
 
-    if (trimTitle === '') {
-      throw new Error('잘못된 형식');
+    if (executor.organizationId !== this.props.id) {
+      throw new Error('같은 조직만 멤버 추가 가능');
     }
+
+    if (!this.hasMember(executor.id)) {
+      throw new Error('조직에 속한 멤버만 추가 가능');
+    }
+
+    const newMembers = entries.map((entry) => {
+      if (this.hasMember(entry.userId)) {
+        throw new Error('이미 속한 멤버');
+      }
+
+      return OrganizationMember.create({
+        id: BigInt(10),
+        organizationId: this.props.id,
+        role: entry.role,
+        userId: entry.userId,
+      });
+    });
+
+    this.members = [...this.members, ...newMembers];
   }
 
-  addMember(members: OrganizationMember[]) {
-    if (members.length > 0) {
-      this.members = [...this.members, ...members];
-    }
+  hasMember(userId: bigint): boolean {
+    return this.members.some((member) => member.userId === userId);
   }
 
-  hasMember;
+  getAdmin(): OrganizationMember | null {
+    return this.members.find((member) => member.role === 'ADMIN') ?? null;
+  }
+
+  getMembers() {
+    return [...this.members];
+  }
+
+  get id() {
+    return this.props.id;
+  }
+
+  get title() {
+    return this.props.title;
+  }
 }

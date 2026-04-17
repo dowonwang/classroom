@@ -8,15 +8,33 @@ interface Props {
 }
 
 export class OrganizationMember {
-  private readonly id: bigint;
-  private readonly organizationId: bigint;
-  private readonly userId: bigint;
-  private role: OrganizationMemberRole;
+  private constructor(private props: Props) {
+    this.props = { ...props };
+  }
 
-  constructor({ id, organizationId, role, userId }: Props) {
-    this.id = id;
-    this.organizationId = organizationId;
-    this.role = role;
-    this.userId = userId;
+  static create(props: Props) {
+    return new OrganizationMember(props);
+  }
+
+  canAddMember(): boolean {
+    const allowRole: OrganizationMemberRole[] = ['ADMIN', 'MAINTAINER'];
+
+    return allowRole.includes(this.props.role);
+  }
+
+  get id() {
+    return this.props.id;
+  }
+
+  get userId() {
+    return this.props.userId;
+  }
+
+  get role() {
+    return this.props.role;
+  }
+
+  get organizationId() {
+    return this.props.organizationId;
   }
 }
