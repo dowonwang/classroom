@@ -22,4 +22,6 @@ export const LOG_MESSAGE: LogEventMessage = {
   PRISMA_CLIENT_UNKNOWN_REQUEST: 'Prisma Client Unknown Request Error',
   PRISMA_CLIENT_VALIDATION: 'Prisma Client Vaildation Error',
   PRISMA_CLINET_RUST_PANIC: 'Prisma Client Rust Panic Error',
+
+  DDD_INVALID_UUID_VO: 'Invalid uuid VO',
 } as const;

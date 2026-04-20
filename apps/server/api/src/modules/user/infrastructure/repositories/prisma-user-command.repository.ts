@@ -7,7 +7,7 @@ import type { PrismaClient } from '@packages/api-db';
 export class PrismaUserCommandRepository implements UserCommandRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async findById(id: bigint): Promise<User | null> {
+  async findById(id: string): Promise<User | null> {
     const record = await this.prisma.user.findUnique({ where: { id } });
 
     return record ? UserPrismaMapper.toDomain(record) : null;
@@ -22,22 +22,19 @@ export class PrismaUserCommandRepository implements UserCommandRepository {
   }
 
   async save(user: User): Promise<void> {
-    const data = {
-      uuid: user.uuid.getValue(),
-      email: user.email.getValue(),
-      name: user.name.getValue(),
-      password: user.password.getValue(),
-    };
-
-    if (user.id) {
-      await this.prisma.user.update({
-        where: { id: user.id },
-        data,
-      });
-
-      return;
-    }
-
-    await this.prisma.user.create({ data });
+    await this.prisma.user.upsert({
+      where: { id: user.id.getValue() },
+      create: {
+        id: user.id.getValue(),
+        email: user.email.getValue(),
+        name: user.name.getValue(),
+        password: user.password.getValue(),
+      },
+      update: {
+        email: user.email.getValue(),
+        name: user.name.getValue(),
+        password: user.password.getValue(),
+      },
+    });
   }
 }

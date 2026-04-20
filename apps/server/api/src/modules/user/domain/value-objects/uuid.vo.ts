@@ -1,37 +1,17 @@
 import { randomUUIDv7 } from 'bun';
-import { z } from 'zod';
 
-import { InvalidUserUUID } from '$modules/user/domain/errors/inavalid-user-uuid.error';
+import { Uuid } from '$shared/ddd/value-object/uuid-vo.abstract';
 
-const uuidSchema = z.uuidv7();
-
-export class UserUUID {
-  private constructor(private readonly value: string) {}
-
-  static create(input: string) {
-    const uuid = this.validation(input);
-    return new UserUUID(uuid);
+export class UserUuid extends Uuid<UserUuid> {
+  private constructor(value: string) {
+    super(value);
   }
 
-  static generate() {
-    return new UserUUID(randomUUIDv7());
+  static create(input: string): UserUuid {
+    return new UserUuid(input);
   }
 
-  static validation(input: string) {
-    const vaildation = uuidSchema.safeParse(input);
-
-    if (!vaildation.success) {
-      throw new InvalidUserUUID(UserUUID.name, { input });
-    }
-
-    return vaildation.data;
-  }
-
-  equals(other: UserUUID): boolean {
-    return this.value === other.value;
-  }
-
-  getValue(): string {
-    return this.value;
+  static generate(): UserUuid {
+    return new UserUuid(randomUUIDv7());
   }
 }

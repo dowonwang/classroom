@@ -37,7 +37,7 @@ export class SignInHandler {
     }
 
     const claims = AccessTokenClaims.create({
-      sub: user.uuid.getValue(),
+      sub: user.id.getValue(),
     });
 
     const accessToken = await this.tokenIssuer.issueAccessToken(claims);
