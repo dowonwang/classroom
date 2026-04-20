@@ -12,7 +12,7 @@ export const UserDtoMapper = {
     }
 
     return {
-      uuid: entity.uuid.getValue(),
+      id: entity.id.getValue(),
       email: entity.email.getValue(),
       name: entity.name.getValue(),
       createdAt: entity.createdAt,

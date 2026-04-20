@@ -1,3 +1,3 @@
 export class MeQuery {
-  constructor(public readonly uuid: string) {}
+  constructor(public readonly id: string) {}
 }

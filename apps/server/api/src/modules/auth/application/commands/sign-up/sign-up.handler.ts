@@ -3,7 +3,7 @@ import { EmailAlreadyExists } from '$modules/user/domain/errors/email-already-ex
 import { UserEmail } from '$modules/user/domain/value-objects/email.vo';
 import { UserName } from '$modules/user/domain/value-objects/name.vo';
 import { UserPassword } from '$modules/user/domain/value-objects/password.vo';
-import { UserUUID } from '$modules/user/domain/value-objects/uuid.vo';
+import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
 
 import type { PasswordHaser } from '$modules/auth/domain/services/password-hasher';
 import type { UserCommandRepository } from '$modules/user/domain/repositories/user-command.repository';
@@ -15,7 +15,7 @@ export class SignUpHandler {
     private readonly passwordHasher: PasswordHaser,
   ) {}
 
-  async execute(command: SignUpCommand): Promise<{ uuid: string }> {
+  async execute(command: SignUpCommand): Promise<{ id: string }> {
     const email = UserEmail.create(command.email);
 
     const existing = await this.userCommandRepository.findByEmail(
@@ -29,8 +29,7 @@ export class SignUpHandler {
     const hashedPassword = await this.passwordHasher.hash(command.password);
     const name = UserName.create(command.name);
 
-    const user = User.create({
-      uuid: UserUUID.generate(),
+    const user = User.create(UserUuid.generate(), {
       email,
       name,
       password: UserPassword.fromHashed(hashedPassword),
@@ -38,6 +37,6 @@ export class SignUpHandler {
 
     await this.userCommandRepository.save(user);
 
-    return { uuid: user.uuid.getValue() };
+    return { id: user.id.getValue() };
   }
 }

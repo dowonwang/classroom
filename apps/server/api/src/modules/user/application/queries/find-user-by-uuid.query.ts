@@ -1,3 +1,3 @@
 export interface FindUserByUuidQuery {
-  uuid: string;
+  id: string;
 }
