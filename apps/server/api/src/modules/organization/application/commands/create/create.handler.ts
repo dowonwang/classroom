@@ -1,0 +1,39 @@
+import { OrganizationMember } from '$modules/organization/domain/entities/organization-member.entity';
+import { Organization } from '$modules/organization/domain/entities/organization.entity';
+import { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
+import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+
+import type { CreateCommnad } from '$modules/organization/application/commands/create/create.command';
+import type { OrganizationCommandRepository } from '$modules/organization/domain/repositories/organization-command.repository';
+
+export class CreateHandler {
+  constructor(
+    private readonly organizationCommandRepository: OrganizationCommandRepository,
+  ) {}
+
+  async execute(command: CreateCommnad): Promise<{ id: string }> {
+    const userId = UserUuid.create(command.userId);
+    const organizationId = OrganizationUuid.generate();
+
+    const organizationOwner = OrganizationMember.create(
+      OrganizationUuid.generate(),
+      {
+        organizationId,
+        userId,
+        role: 'ADMIN',
+      },
+    );
+
+    const organization = Organization.create(
+      organizationId,
+      {
+        title: command.title,
+      },
+      [organizationOwner],
+    );
+
+    await this.organizationCommandRepository.save(organization);
+
+    return { id: organization.id.getValue() };
+  }
+}

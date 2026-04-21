@@ -1,29 +1,36 @@
+import { Entity } from '$shared/ddd/entity.abstract';
+
+import type { OrganizationMemberUuid } from '$modules/organization/domain/value-objects/organization-member-uuid.vo';
+import type { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
+import type { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+
 export type OrganizationMemberRole = 'ADMIN' | 'MAINTAINER' | 'MEMBER';
 
-interface Props {
-  id: bigint;
-  organizationId: bigint;
-  userId: bigint;
+interface OrganizationMemberProps {
+  organizationId: OrganizationUuid;
+  userId: UserUuid;
   role: OrganizationMemberRole;
 }
 
-export class OrganizationMember {
-  private constructor(private props: Props) {
+export class OrganizationMember extends Entity<OrganizationMemberUuid> {
+  private props: OrganizationMemberProps;
+
+  private constructor(
+    id: OrganizationMemberUuid,
+    props: OrganizationMemberProps,
+  ) {
+    super(id);
     this.props = { ...props };
   }
 
-  static create(props: Props) {
-    return new OrganizationMember(props);
+  static create(id: OrganizationMemberUuid, props: OrganizationMemberProps) {
+    return new OrganizationMember(id, props);
   }
 
   canAddMember(): boolean {
     const allowRole: OrganizationMemberRole[] = ['ADMIN', 'MAINTAINER'];
 
     return allowRole.includes(this.props.role);
-  }
-
-  get id() {
-    return this.props.id;
   }
 
   get userId() {

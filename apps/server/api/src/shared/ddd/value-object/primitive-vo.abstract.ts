@@ -16,7 +16,7 @@ export abstract class PrimitiveValueObject<
 
   protected abstract validation(input: ValueType): void;
 
-  eqauls(other: SelfType): boolean {
+  equals(other: SelfType): boolean {
     return this.value === other.getValue();
   }
 
