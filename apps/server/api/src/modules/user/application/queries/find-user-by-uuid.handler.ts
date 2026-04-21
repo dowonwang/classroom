@@ -8,7 +8,7 @@ export class FindUserByUuidHandler {
   constructor(private readonly userQueryRepository: UserQueryRepository) {}
 
   async execute(query: FindUserByUuidQuery): Promise<UserDetailDto | null> {
-    const user = await this.userQueryRepository.findByUUID(query.uuid);
+    const user = await this.userQueryRepository.findById(query.id);
 
     return user ? UserDtoMapper.fromEntity(user) : null;
   }

@@ -20,6 +20,8 @@ export const LOG_EVENT = {
   PRISMA_CLINET_RUST_PANIC: 'prisma_client.rust_panic',
   PRISMA_CLIENT_INITIALIZATION: 'prisma_client.initialization',
   PRISMA_CLIENT_VALIDATION: 'prisma_client.validation',
+
+  DDD_INVALID_UUID_VO: 'ddd.invalid_uuid_vo',
 } as const;
 
 export type LogEventMessage = Record<keyof typeof LOG_EVENT, string>;

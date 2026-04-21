@@ -5,7 +5,7 @@ import { UnauthorizedError } from '$shared/errors/common.erorr';
 import type { JwtTokenVerifier } from '$modules/auth/infrastructure/services/jwt-token-verifier';
 
 export interface AuthUser {
-  uuid: string;
+  id: string;
 }
 
 export function createAuthGuard(tokenVerifier: JwtTokenVerifier) {
@@ -31,7 +31,7 @@ export function createAuthGuard(tokenVerifier: JwtTokenVerifier) {
 
       return {
         authUser: {
-          uuid: claims.getSubject(),
+          id: claims.getSubject(),
         } satisfies AuthUser,
       };
     })

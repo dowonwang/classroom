@@ -1,6 +1,6 @@
 export interface UserDetailDto {
   name: string;
-  uuid: string;
+  id: string;
   email: string;
   createdAt: Date;
   updatedAt: Date;

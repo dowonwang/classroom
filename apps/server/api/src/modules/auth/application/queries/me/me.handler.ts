@@ -1,6 +1,6 @@
 import { UserNotFound } from '$modules/user/application/errors/user-not-found.error';
 import { UserDtoMapper } from '$modules/user/application/mapper/user-dto.mapper';
-import { UserUUID } from '$modules/user/domain/value-objects/uuid.vo';
+import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
 
 import type { UserDetailDto } from '$modules/user/application/dto/user-detail.dto';
 import type { UserQueryRepository } from '$modules/user/domain/repositories/user-query.repository';
@@ -10,9 +10,9 @@ export class MeHandler {
   constructor(private readonly userQueryRepository: UserQueryRepository) {}
 
   async excute(query: MeQuery): Promise<UserDetailDto> {
-    const uuid = UserUUID.create(query.uuid);
+    const id = UserUuid.create(query.id);
 
-    const user = await this.userQueryRepository.findByUUID(uuid.getValue());
+    const user = await this.userQueryRepository.findById(id.getValue());
 
     if (!user) {
       throw new UserNotFound(MeHandler.name);
