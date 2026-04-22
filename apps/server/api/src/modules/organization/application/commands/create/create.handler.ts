@@ -1,5 +1,6 @@
 import { OrganizationMember } from '$modules/organization/domain/entities/organization-member.entity';
 import { Organization } from '$modules/organization/domain/entities/organization.entity';
+import { OrganizationMemberUuid } from '$modules/organization/domain/value-objects/organization-member-uuid.vo';
 import { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
 import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
 
@@ -16,7 +17,7 @@ export class CreateHandler {
     const organizationId = OrganizationUuid.generate();
 
     const organizationOwner = OrganizationMember.create(
-      OrganizationUuid.generate(),
+      OrganizationMemberUuid.generate(),
       {
         organizationId,
         userId,
