@@ -2,4 +2,5 @@ import type { Organization } from '$modules/organization/domain/entities/organiz
 
 export interface OrganizationCommandRepository {
   save(organization: Organization): Promise<void>;
+  findOrganizationById(id: string): Promise<Organization | null>;
 }
