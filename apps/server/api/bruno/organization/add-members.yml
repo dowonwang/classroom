@@ -1,0 +1,15 @@
+info:
+  name: add-members
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{process.env.BASE_URL}}/organization/add-members"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -5,6 +5,17 @@ export const OrganizationHttpModel = {
     userId: z.uuidv7(),
     title: z.string(),
   }),
+
+  addMember: z.object({
+    organizationId: z.uuidv7(),
+    userId: z.uuidv7(),
+    members: z.array(
+      z.object({
+        userId: z.uuidv7(),
+        role: z.enum(['ADMIN', 'MAINTAINER', 'MEMBER']),
+      }),
+    ),
+  }),
 };
 
 export type OrganizationHttpModel = {

@@ -1,3 +1,5 @@
+import { OrganizationPrismaMapper } from '$modules/organization/infrastructure/mappers/organization-prisma.mapper';
+
 import type { Organization } from '$modules/organization/domain/entities/organization.entity';
 import type { OrganizationCommandRepository } from '$modules/organization/domain/repositories/organization-command.repository';
 import type { PrismaClient } from '@packages/api-db';
@@ -29,5 +31,23 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
         data: membersRecord,
       });
     });
+  }
+
+  async findOrganizationById(id: string): Promise<Organization | null> {
+    const organization = await this.prisma.organization.findUnique({
+      where: { id },
+      include: { organizationMembers: true },
+    });
+
+    const members = organization?.organizationMembers;
+
+    if (organization && members) {
+      return OrganizationPrismaMapper.toOrganizationDomain(
+        organization,
+        members,
+      );
+    }
+
+    return null;
   }
 }

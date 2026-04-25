@@ -5,10 +5,12 @@ import { OrganizationHttpModel } from '$modules/organization/presentation/organi
 import { errorPlugin } from '$shared/http/plugin/error.plugin';
 import { ApiResponseBuilder } from '$shared/responses/api-response-builder';
 
+import type { AddMemberHandler } from '$modules/organization/application/commands/add-member/add-member.handler';
 import type { CreateHandler } from '$modules/organization/application/commands/create/create.handler';
 
 interface OrganizationDependencies {
   createHandler: CreateHandler;
+  addMemberHandler: AddMemberHandler;
 }
 
 export function createOrganizationController(deps: OrganizationDependencies) {
@@ -37,6 +39,24 @@ export function createOrganizationController(deps: OrganizationDependencies) {
           body: 'create',
           detail: {
             summary: 'Create Organization',
+          },
+        },
+      )
+      // POST /organization/add-members
+      .post(
+        '/add-members',
+        async ({ body, set }) => {
+          await deps.addMemberHandler.execute(body);
+          set.status = 201;
+
+          return ApiResponseBuilder.success({
+            message: '',
+          });
+        },
+        {
+          body: 'addMember',
+          detail: {
+            summary: 'Add Members',
           },
         },
       )
