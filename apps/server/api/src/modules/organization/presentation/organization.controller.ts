@@ -16,6 +16,7 @@ interface OrganizationDependencies {
 export function createOrganizationController(deps: OrganizationDependencies) {
   return (
     new Elysia({
+      name: 'organization',
       prefix: '/organization',
       detail: {
         tags: ['Organization'],
