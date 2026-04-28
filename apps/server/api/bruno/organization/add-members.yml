@@ -6,7 +6,30 @@ info:
 http:
   method: POST
   url: "{{process.env.BASE_URL}}/organization/add-members"
-  auth: inherit
+  body:
+    type: json
+    data: |-
+      {
+        "organizationId": "019db547-294c-7000-9761-235e8b92fbb3",
+        "userId": "019db535-a1c4-7000-b5b9-479588195c03",
+        "members": [
+          {
+            "userId": "019dc387-d5de-7000-a30a-4fa203378eba",
+            "role": "MEMBER"
+          }
+        ]
+      }
+  auth:
+    type: bearer
+    token: "{{ACCESS_TOKEN}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const accessToken = bru.getEnvVar("ACCESS_TOKEN");
+
+        if(!accessToken) throw new Error("Access token missing.\nRun the 'sign-in' request to automatically save a new one.");
 
 settings:
   encodeUrl: true

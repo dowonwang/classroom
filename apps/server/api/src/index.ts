@@ -1,5 +1,6 @@
 import 'dotenv/config';
 
+import { openapi } from '@elysia/openapi';
 import { Elysia } from 'elysia';
 
 import organizationModule from '$modules/organization';
@@ -10,6 +11,7 @@ import { LOG_MESSAGE } from './shared/logger/constant/log-message';
 import { logger } from './shared/logger/logger';
 
 const app = new Elysia()
+  .use(openapi())
   .use(authModule)
   .use(organizationModule)
   .listen(process.env.APP_PORT ?? 3000);

@@ -1,6 +1,7 @@
 import { OrganizationMember } from '$modules/organization/domain/entities/organization-member.entity';
+import { OrganizationMembersAddedEvent } from '$modules/organization/domain/events/organization-members-added.event';
 import { OrganizationMemberUuid } from '$modules/organization/domain/value-objects/organization-member-uuid.vo';
-import { Entity } from '$shared/ddd/entity.abstract';
+import { AggregateRoot } from '$shared/ddd/aggregate-root.abstract';
 
 import type { OrganizationMemberRole } from '$modules/organization/domain/entities/organization-member.entity';
 import type { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
@@ -10,7 +11,7 @@ interface OrganizationProps {
   title: string;
 }
 
-export class Organization extends Entity<OrganizationUuid> {
+export class Organization extends AggregateRoot<OrganizationUuid> {
   private members: OrganizationMember[] = [];
   private props: OrganizationProps;
 
@@ -26,6 +27,10 @@ export class Organization extends Entity<OrganizationUuid> {
 
     this.props = { ...props };
     this.members = [...members];
+
+    this.addDomainEvent(
+      new OrganizationMembersAddedEvent(this.id, this.members),
+    );
   }
 
   static create(
@@ -92,7 +97,7 @@ export class Organization extends Entity<OrganizationUuid> {
   addMember(
     executorUserId: UserUuid,
     entries: { userId: UserUuid; role: OrganizationMemberRole }[],
-  ) {
+  ): void {
     this.validateDuplicateEntries(entries);
 
     const executor = this.members.find((member) =>
@@ -128,6 +133,8 @@ export class Organization extends Entity<OrganizationUuid> {
     });
 
     this.members = [...this.members, ...newMembers];
+
+    this.addDomainEvent(new OrganizationMembersAddedEvent(this.id, newMembers));
   }
 
   hasMember(userId: UserUuid): boolean {

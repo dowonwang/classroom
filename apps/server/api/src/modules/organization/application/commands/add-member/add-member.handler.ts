@@ -28,5 +28,7 @@ export class AddMemberHandler {
         role: member.role,
       })),
     );
+
+    await this.organizationCommandRepository.save(organization);
   }
 }
