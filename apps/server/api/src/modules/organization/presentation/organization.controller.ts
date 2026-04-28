@@ -28,8 +28,11 @@ export function createOrganizationController(deps: OrganizationDependencies) {
       // POST /organization
       .post(
         '/',
-        async ({ body, set }) => {
-          await deps.createHandler.execute(body);
+        async ({ body, set, authUser }) => {
+          await deps.createHandler.execute({
+            userId: authUser.id,
+            ...body,
+          });
           set.status = 201;
 
           return ApiResponseBuilder.success({
@@ -46,12 +49,15 @@ export function createOrganizationController(deps: OrganizationDependencies) {
       // POST /organization/add-members
       .post(
         '/add-members',
-        async ({ body, set }) => {
-          await deps.addMemberHandler.execute(body);
+        async ({ body, set, authUser }) => {
+          await deps.addMemberHandler.execute({
+            userId: authUser.id,
+            ...body,
+          });
           set.status = 201;
 
           return ApiResponseBuilder.success({
-            message: '',
+            message: '멤버 추가 성공',
           });
         },
         {

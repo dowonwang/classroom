@@ -21,7 +21,7 @@ model OrganizationMember {
     user         User         @relation(fields: [userId], references: [id])
 
     @@unique([organizationId, userId])
-    @@index([userId])
+    @@index([userId, role])
     @@index([organizationId])
     @@map("organization_member")
 }

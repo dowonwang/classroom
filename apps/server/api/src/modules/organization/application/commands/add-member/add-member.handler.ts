@@ -1,10 +1,13 @@
 import { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
 import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
+import { createLogger } from '$shared/logger/logger';
 
 import type { OrganizationCommandRepository } from '$modules/organization/domain/repositories/organization-command.repository';
 import type { AddMemberCommand } from './add-member.command';
 
 export class AddMemberHandler {
+  private readonly logger = createLogger(AddMemberHandler.name);
+
   constructor(
     private readonly organizationCommandRepository: OrganizationCommandRepository,
   ) {}
@@ -20,6 +23,8 @@ export class AddMemberHandler {
     if (!organization) {
       throw Error('조직 찾을 수 없음');
     }
+
+    this.logger.debug({ details: organization }, 'add member');
 
     organization.addMember(
       UserUuid.create(command.userId),

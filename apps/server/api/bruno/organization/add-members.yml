@@ -11,7 +11,7 @@ http:
     data: |-
       {
         "organizationId": "019db547-294c-7000-9761-235e8b92fbb3",
-        "userId": "019db535-a1c4-7000-b5b9-479588195c03",
+
         "members": [
           {
             "userId": "019dc387-d5de-7000-a30a-4fa203378eba",

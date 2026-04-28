@@ -1,5 +1,7 @@
+import { OrganizationCreatededEvent } from '$modules/organization/domain/events/organization-createded.event';
 import { OrganizationMembersAddedEvent } from '$modules/organization/domain/events/organization-members-added.event';
 import { OrganizationPrismaMapper } from '$modules/organization/infrastructure/mappers/organization-prisma.mapper';
+import { logger } from '$shared/logger/logger';
 
 import type { Organization } from '$modules/organization/domain/entities/organization.entity';
 import type { OrganizationCommandRepository } from '$modules/organization/domain/repositories/organization-command.repository';
@@ -11,18 +13,19 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
 
   async save(organization: Organization): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
-      // await tx.organization.create({
-      //   data: {
-      //     id: organization.id.getValue(),
-      //     title: organization.title,
-      //   },
-      // });
+      for (const event of organization.pullDomainEvents()) {
+        if (event instanceof OrganizationCreatededEvent) {
+          await tx.organization.create({
+            data: {
+              id: event.id.getValue(),
+              title: event.title,
+            },
+          });
+        }
 
-      for (const event of organization.getDomainEvents()) {
         if (event instanceof OrganizationMembersAddedEvent) {
-          const members = organization.getMembers();
           const membersRecord: OrganizationMemberCreateManyAndReturnArgs['data'] =
-            members.map((member) => ({
+            event.members.map((member) => ({
               id: member.id.getValue(),
               userId: member.userId.getValue(),
               organizationId: member.organizationId.getValue(),
@@ -35,6 +38,8 @@ export class PrismaOrganizationCommandRepository implements OrganizationCommandR
         }
       }
     });
+
+    logger.debug({ details: organization }, 'infra');
   }
 
   async findOrganizationById(id: string): Promise<Organization | null> {

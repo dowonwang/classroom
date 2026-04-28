@@ -4,11 +4,13 @@ import { OrganizationMemberUuid } from '$modules/organization/domain/value-objec
 import { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
 import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
 
-import type { CreateCommnad } from '$modules/organization/application/commands/create/create.command';
 import type { OrganizationCommandRepository } from '$modules/organization/domain/repositories/organization-command.repository';
+import type { OrganizationPolicy } from '$modules/organization/domain/services/organization-policy';
+import type { CreateCommnad } from './create.command';
 
 export class CreateHandler {
   constructor(
+    private readonly organizationPolicy: OrganizationPolicy,
     private readonly organizationCommandRepository: OrganizationCommandRepository,
   ) {}
 
@@ -31,6 +33,11 @@ export class CreateHandler {
         title: command.title,
       },
       [organizationOwner],
+    );
+
+    await this.organizationPolicy.assertCreatableTitleByUser(
+      userId.getValue(),
+      organization.title,
     );
 
     await this.organizationCommandRepository.save(organization);

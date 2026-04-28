@@ -1,4 +1,4 @@
-import { Entity } from '$shared/ddd/entity.abstract';
+import { Entity } from '$shared/ddd/entity/entity.abstract';
 
 import type { OrganizationMemberUuid } from '$modules/organization/domain/value-objects/organization-member-uuid.vo';
 import type { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';

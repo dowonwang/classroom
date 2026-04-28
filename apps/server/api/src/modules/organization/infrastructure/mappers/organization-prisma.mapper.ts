@@ -18,7 +18,7 @@ export const OrganizationPrismaMapper = {
       OrganizationPrismaMapper.toMemberDomain(member),
     );
 
-    return Organization.create(
+    return Organization.reconstruct(
       OrganizationUuid.create(organizationRecord.id),
       {
         title: organizationRecord.title,

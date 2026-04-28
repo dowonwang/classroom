@@ -1,7 +1,8 @@
 import { OrganizationMember } from '$modules/organization/domain/entities/organization-member.entity';
+import { OrganizationCreatededEvent } from '$modules/organization/domain/events/organization-createded.event';
 import { OrganizationMembersAddedEvent } from '$modules/organization/domain/events/organization-members-added.event';
 import { OrganizationMemberUuid } from '$modules/organization/domain/value-objects/organization-member-uuid.vo';
-import { AggregateRoot } from '$shared/ddd/aggregate-root.abstract';
+import { AggregateRoot } from '$shared/ddd/entity/aggregate-root.abstract';
 
 import type { OrganizationMemberRole } from '$modules/organization/domain/entities/organization-member.entity';
 import type { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
@@ -27,10 +28,6 @@ export class Organization extends AggregateRoot<OrganizationUuid> {
 
     this.props = { ...props };
     this.members = [...members];
-
-    this.addDomainEvent(
-      new OrganizationMembersAddedEvent(this.id, this.members),
-    );
   }
 
   static create(
@@ -38,6 +35,23 @@ export class Organization extends AggregateRoot<OrganizationUuid> {
     props: OrganizationProps,
     members: OrganizationMember[],
   ): Organization {
+    const organization = new Organization(id, props, members);
+
+    organization.addDomainEvent(
+      new OrganizationCreatededEvent(organization.id, organization.title),
+    );
+    organization.addDomainEvent(
+      new OrganizationMembersAddedEvent(organization.id, organization.members),
+    );
+
+    return organization;
+  }
+
+  static reconstruct(
+    id: OrganizationUuid,
+    props: OrganizationProps,
+    members: OrganizationMember[],
+  ) {
     return new Organization(id, props, members);
   }
 

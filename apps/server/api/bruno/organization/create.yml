@@ -10,7 +10,6 @@ http:
     type: json
     data: |-
       {
-        "userId": "019db535-a1c4-7000-b5b9-479588195c03",
         "title": "test"
       }
   auth:
