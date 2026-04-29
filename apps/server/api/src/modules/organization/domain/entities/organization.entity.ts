@@ -2,6 +2,13 @@ import { OrganizationMember } from '$modules/organization/domain/entities/organi
 import { OrganizationCreatededEvent } from '$modules/organization/domain/events/organization-createded.event';
 import { OrganizationMembersAddedEvent } from '$modules/organization/domain/events/organization-members-added.event';
 import { OrganizationMemberUuid } from '$modules/organization/domain/value-objects/organization-member-uuid.vo';
+import { OrganizationAccessDenied } from '$modules/organization/errors/access-denied.error';
+import { DuplicateOrganizationMember } from '$modules/organization/errors/duplicate-organization-member.error';
+import { MinMemberConstraint } from '$modules/organization/errors/min-member-constraint.error';
+import { OrganizationAdminLimitExceeded } from '$modules/organization/errors/organization-admin-limit-exceeded.error';
+import { OrganizationAdminRequirement } from '$modules/organization/errors/organization-admin-requirement.error';
+import { OrganizationTitleEmpty } from '$modules/organization/errors/organization-title-empty.error';
+import { UnaffiliatedMember } from '$modules/organization/errors/unaffiliated_member.error';
 import { AggregateRoot } from '$shared/ddd/entity/aggregate-root.abstract';
 
 import type { OrganizationMemberRole } from '$modules/organization/domain/entities/organization-member.entity';
@@ -59,7 +66,7 @@ export class Organization extends AggregateRoot<OrganizationUuid> {
     const trimmed = title.trim();
 
     if (!trimmed) {
-      throw new Error('조직명은 비어 있을 수 없음');
+      throw new OrganizationTitleEmpty(Organization.name);
     }
   }
 
@@ -68,12 +75,12 @@ export class Organization extends AggregateRoot<OrganizationUuid> {
     members: OrganizationMember[],
   ): void {
     if (members.length === 0) {
-      throw new Error('초기 생성 시 멤버는 최소 한 명 이상이어야 함');
+      throw new MinMemberConstraint(Organization.name);
     }
 
     for (const member of members) {
       if (!member.organizationId.equals(organizationId)) {
-        throw new Error('조직에 속하지 않은 멤버 데이터');
+        throw new UnaffiliatedMember(Organization.name);
       }
     }
 
@@ -82,17 +89,17 @@ export class Organization extends AggregateRoot<OrganizationUuid> {
     );
 
     if (uniqueUserIds.size !== members.length) {
-      throw new Error('중복 멤버 데이터 존재');
+      throw new DuplicateOrganizationMember(Organization.name);
     }
 
     const adminUser = members.filter((member) => member.role === 'ADMIN');
 
     if (adminUser.length === 0) {
-      throw new Error('관리자는 1명 필수');
+      throw new OrganizationAdminRequirement(Organization.name);
     }
 
     if (adminUser.length > 1) {
-      throw new Error('관리자는 1명 초과 불가');
+      throw new OrganizationAdminLimitExceeded(Organization.name);
     }
   }
 
@@ -104,7 +111,7 @@ export class Organization extends AggregateRoot<OrganizationUuid> {
     );
 
     if (uniqueUserIds.size !== entries.length) {
-      throw new Error('중복 데이터 있음');
+      throw new DuplicateOrganizationMember(Organization.name);
     }
   }
 
@@ -127,16 +134,16 @@ export class Organization extends AggregateRoot<OrganizationUuid> {
        * 위 조건이랑 중복인 검증
        * 의도치 않은 데이터 방지 위해 유지
        */
-      throw new Error('잘못된 멤버 데이터');
+      throw new UnaffiliatedMember(Organization.name);
     }
 
     if (!executor.canAddMember()) {
-      throw new Error('추가 권한 없음');
+      throw new OrganizationAccessDenied(Organization.name);
     }
 
     const newMembers = entries.map((entry) => {
       if (this.hasMember(entry.userId)) {
-        throw new Error('이미 속한 멤버');
+        throw new DuplicateOrganizationMember(Organization.name);
       }
 
       return OrganizationMember.create(OrganizationMemberUuid.generate(), {

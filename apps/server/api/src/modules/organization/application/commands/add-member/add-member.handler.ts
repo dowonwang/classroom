@@ -1,4 +1,5 @@
 import { OrganizationUuid } from '$modules/organization/domain/value-objects/organization-uuid.vo';
+import { OrganizationNotFound } from '$modules/organization/errors/organization-not-found.error';
 import { UserUuid } from '$modules/user/domain/value-objects/uuid.vo';
 import { createLogger } from '$shared/logger/logger';
 
@@ -21,7 +22,7 @@ export class AddMemberHandler {
       );
 
     if (!organization) {
-      throw Error('조직 찾을 수 없음');
+      throw new OrganizationNotFound(AddMemberHandler.name);
     }
 
     this.logger.debug({ details: organization }, 'add member');
