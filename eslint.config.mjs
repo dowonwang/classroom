@@ -1,7 +1,8 @@
 import eslint from '@eslint/js';
+import eslintNextPlugin from '@next/eslint-plugin-next';
 import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
 import { importX } from 'eslint-plugin-import-x';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(
@@ -9,6 +10,22 @@ export default defineConfig(
   tseslint.configs.strictTypeChecked,
   importX.flatConfigs.recommended,
   importX.flatConfigs.typescript,
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': eslintNextPlugin,
+    },
+    settings: {
+      next: {
+        rootDir: 'web/client/',
+      },
+    },
+    rules: {
+      ...eslintNextPlugin.configs.recommended.rules,
+      ...eslintNextPlugin.configs['core-web-vitals'].rules,
+      '@next/next/no-html-link-for-pages': 'off',
+    },
+  },
   {
     languageOptions: {
       parserOptions: {
@@ -20,6 +37,7 @@ export default defineConfig(
         createTypeScriptImportResolver({
           bun: true,
           project: ['apps/**/*/tsconfig.json'],
+          noWarnOnMultipleProjects: true,
         }),
       ],
     },
@@ -69,7 +87,12 @@ export default defineConfig(
       ],
     },
   },
-  {
-    ignores: ['*.config.mjs'],
-  },
+  globalIgnores([
+    '**/.next/**',
+    '**/out/**',
+    '**/build/**',
+    '**/dist/**',
+    '**/next-env.d.ts',
+    '**/*.config.mjs',
+  ]),
 );
