@@ -1,13 +1,15 @@
 import { cn } from '../lib/cn';
 
+const tw = String.raw;
+
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'secondary' | 'ghost';
 };
 
 const variants = {
-  primary: 'bg-black text-white hover:bg-zinc-800',
-  secondary: 'bg-zinc-100 text-zinc-900 hover:bg-zinc-200',
-  ghost: 'bg-transparent hover:bg-zinc-100',
+  primary: tw`bg-black text-white hover:bg-zinc-800`,
+  secondary: tw`bg-zinc-100 text-zinc-900 hover:bg-zinc-200`,
+  ghost: tw`bg-transparent hover:bg-zinc-100`,
 };
 
 export function Button({
