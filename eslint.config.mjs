@@ -10,22 +10,7 @@ export default defineConfig(
   tseslint.configs.strictTypeChecked,
   importX.flatConfigs.recommended,
   importX.flatConfigs.typescript,
-  {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    plugins: {
-      '@next/next': eslintNextPlugin,
-    },
-    settings: {
-      next: {
-        rootDir: 'web/client/',
-      },
-    },
-    rules: {
-      ...eslintNextPlugin.configs.recommended.rules,
-      ...eslintNextPlugin.configs['core-web-vitals'].rules,
-      '@next/next/no-html-link-for-pages': 'off',
-    },
-  },
+
   {
     languageOptions: {
       parserOptions: {
@@ -36,7 +21,7 @@ export default defineConfig(
       'import-x/resolver-next': [
         createTypeScriptImportResolver({
           bun: true,
-          project: ['apps/**/*/tsconfig.json'],
+          project: ['apps/**/*/tsconfig.json', 'packages/**/*/tsconfig.json'],
           noWarnOnMultipleProjects: true,
         }),
       ],
@@ -87,6 +72,37 @@ export default defineConfig(
       ],
     },
   },
+  // 공통 jsx, tsx
+  {
+    files: ['**/*.{jsx,tsx}'],
+    plugins: {},
+    settings: {},
+    rules: {},
+  },
+  // nextjs 앱
+  {
+    files: ['apps/web/client/**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': eslintNextPlugin,
+    },
+    settings: {
+      next: {
+        rootDir: 'web/client/',
+      },
+    },
+    rules: {
+      ...eslintNextPlugin.configs.recommended.rules,
+      ...eslintNextPlugin.configs['core-web-vitals'].rules,
+      '@next/next/no-html-link-for-pages': 'off',
+    },
+  },
+  {
+    files: ['packages/**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': 'off',
+    },
+  },
+
   globalIgnores([
     '**/.next/**',
     '**/out/**',
