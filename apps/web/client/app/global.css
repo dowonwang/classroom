@@ -1,3 +1,14 @@
 @import 'tailwindcss';
-
 @source '../node_modules/@packages/ui/src';
+
+@theme {
+  /* 레이아웃 색상 */
+  --color-haader: #fff;
+  --color-sidebar: #fff;
+
+  /* 색상 변수 */
+  --color-background: #fafbf9;
+  --color-border: #f5f4f0;
+
+  --color-primary: #66bb6a;
+}
