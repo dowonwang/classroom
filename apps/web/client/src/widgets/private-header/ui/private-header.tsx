@@ -1,13 +1,12 @@
 'use client';
 
-import { Button } from '@packages/ui/components/button';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { Bell } from 'lucide-react';
 
 import { sessionQueryOptions } from '$entities/session';
 import { UserAvatar } from '$entities/user';
 import { SignOutButton } from '$features/auth/sign-out';
+import { SidebarToggleButton } from '$widgets/sidebar/ui/toggle-button';
 
 export function PrivateHeader() {
   const today = dayjs().format('dddd, MMM D');
@@ -18,16 +17,14 @@ export function PrivateHeader() {
   }
 
   return (
-    <header className='bg-header border-border h-header flex items-center justify-between gap-4 border-b px-6'>
-      <div>
+    <header className='bg-header/80 border-border h-header sticky top-0 flex items-center gap-4 border-b px-6 backdrop-blur-md'>
+      <div className='hidden md:block'>
         <span className='text-secondary-foreground'>{today}</span>
       </div>
 
-      <div className='flex items-center gap-4'>
-        <Button variant='secondary' size='icon'>
-          <Bell />
-        </Button>
+      <SidebarToggleButton className='md:hidden' />
 
+      <div className='ml-auto flex items-center gap-2'>
         <UserAvatar name={data.user.name} />
         <SignOutButton />
       </div>
