@@ -1,24 +1,29 @@
 'use client';
 
 import { Button } from '@packages/ui/components/button';
-import { useFormStatus } from 'react-dom';
+import { LogOut } from 'lucide-react';
+import { useTransition } from 'react';
 
 import { signOutAction } from '../api/sign-out-action.server';
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type='submit' variant='secondary' disabled={pending}>
-      Sign Out
-    </Button>
-  );
-}
-
 export function SignOutButton() {
+  const [isPending, startTransition] = useTransition();
+
+  const onClick = () => {
+    startTransition(async () => {
+      await signOutAction();
+    });
+  };
+
   return (
-    <form action={signOutAction}>
-      <SubmitButton />
-    </form>
+    <Button
+      type='submit'
+      variant='secondary'
+      size='icon'
+      disabled={isPending}
+      onClick={onClick}
+    >
+      <LogOut />
+    </Button>
   );
 }

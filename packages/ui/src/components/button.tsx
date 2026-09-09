@@ -32,7 +32,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const style = cn(
-    'inline-flex items-center justify-center text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50',
+    'inline-flex items-center justify-center text-sm font-medium shadow transition-colors disabled:pointer-events-none disabled:opacity-50',
     variants[variant],
     sizeVariants[size],
     className,

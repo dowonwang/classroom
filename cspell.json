@@ -3,7 +3,7 @@
   "ignorePaths": [],
   "dictionaryDefinitions": [],
   "dictionaries": [],
-  "words": [],
+  "words": ["noto", "rgba"],
   "ignoreWords": ["Dowon", "noreferror", "elysia", "Refreshable", "uuidv"],
   "import": []
 }

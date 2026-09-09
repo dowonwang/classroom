@@ -1,20 +1,13 @@
-import { CLIENT_ENV_CONFIG } from '$shared/config/client';
-import { AppLogo } from '$shared/ui';
+'use client';
 
-import { MENU_DATA } from '../config/menu-data';
-import { Menu } from './menu/menu';
+import { useBreakPoint } from '$shared/lib/theme';
+
+import { DefaultSidebar } from './default-sidebar';
+import { MobileSidebar } from './mobile-sidebar';
 
 export function Sidebar() {
-  return (
-    <aside className='bg-sidebar border-border w-active-sidebar flex h-dvh flex-col border-r'>
-      <div className='border-border min-h-header h-header flex items-center gap-3 border-b px-5'>
-        <AppLogo height={36} width={36} />
-        <span className='text-lg font-semibold whitespace-nowrap'>
-          {CLIENT_ENV_CONFIG.APP_NAME}
-        </span>
-      </div>
+  const { breakPoint } = useBreakPoint();
+  const isMobile = breakPoint === 'sm' || breakPoint === 'md';
 
-      <Menu data={MENU_DATA} />
-    </aside>
-  );
+  return isMobile ? <MobileSidebar /> : <DefaultSidebar />;
 }

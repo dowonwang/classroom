@@ -49,7 +49,8 @@ export function Avatar({
     >
       <Button
         variant='ghost'
-        className={cn('gap-2 rounded-xl pr-3 pl-0', className)}
+        size='icon'
+        className={cn('rounded-xl pr-0 pl-0', className)}
       >
         {children}
       </Button>
