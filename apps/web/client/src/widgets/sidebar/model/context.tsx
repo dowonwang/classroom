@@ -5,6 +5,7 @@ import { createContext, useContext, useState } from 'react';
 interface Context {
   isOpen: boolean;
   toggle: () => void;
+  setIsOpen: (value: boolean) => void;
 }
 
 interface Props {
@@ -25,6 +26,7 @@ export function SidebarProvider({ children }: Props) {
       value={{
         isOpen,
         toggle,
+        setIsOpen,
       }}
     >
       {children}

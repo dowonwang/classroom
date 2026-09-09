@@ -1,20 +1,27 @@
 'use client';
 
 import { Button } from '@packages/ui/components/button';
-import { Menu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 import { useSidebarContext } from '../model/context';
 
 interface Props {
+  type: 'OPEN' | 'CLOSE';
   className?: string;
 }
 
-export function SidebarToggleButton({ className }: Props) {
+export function SidebarToggleButton({ className, type }: Props) {
   const { toggle } = useSidebarContext();
 
   return (
-    <Button size='icon' onClick={toggle} className={className ?? ''}>
-      <Menu />
+    <Button
+      size='icon'
+      variant={type === 'CLOSE' ? 'secondary' : 'primary'}
+      onClick={toggle}
+      className={className ?? ''}
+    >
+      {type === 'CLOSE' && <X />}
+      {type === 'OPEN' && <Menu />}
     </Button>
   );
 }

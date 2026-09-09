@@ -1,15 +1,13 @@
 import { Button } from '@packages/ui/components/button';
-import { Moon } from 'lucide-react';
 import Link from 'next/link';
 
 import { SignOutButton } from '$features/auth/sign-out';
+import { ThemeToggleButton } from '$features/theme';
 
 export function AuthenticatedButtonGroup() {
   return (
     <div className='flex items-center gap-2'>
-      <Button variant='secondary' size='icon'>
-        <Moon />
-      </Button>
+      <ThemeToggleButton />
 
       <SignOutButton />
 

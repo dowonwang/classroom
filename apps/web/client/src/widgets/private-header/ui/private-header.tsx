@@ -22,11 +22,11 @@ export function PrivateHeader() {
         <span className='text-secondary-foreground'>{today}</span>
       </div>
 
-      <SidebarToggleButton className='md:hidden' />
+      <SidebarToggleButton className='md:hidden' type='OPEN' />
 
       <div className='ml-auto flex items-center gap-2'>
-        <UserAvatar name={data.user.name} />
         <SignOutButton />
+        <UserAvatar name={data.user.name} />
       </div>
     </header>
   );
