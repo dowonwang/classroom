@@ -4,6 +4,7 @@ import '$app/styles/global.css';
 
 import { Noto_Sans, Noto_Sans_KR } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
+import { getLocale } from 'next-intl/server';
 
 import {
   FlashCookieConsumer,
@@ -28,10 +29,11 @@ const noto = Noto_Sans({
 export async function AppLayout({ children }: Props) {
   const flashToken = await getFlashCookie();
   const theme = await getTheme();
+  const locale = await getLocale();
 
   return (
     <html
-      lang='en'
+      lang={locale}
       className={`${notoKr.variable} ${noto.variable} ${theme === 'dark' ? 'dark' : ''}`}
     >
       <head>
